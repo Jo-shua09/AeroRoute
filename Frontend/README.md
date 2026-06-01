@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# 🌍 AeroRoute — Client Application
 
-First, run the development server:
+**The frontend orchestration engine for predictive crowd intelligence and logistics routing.**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+[!Next.js](#)
+[!TypeScript](#)
+[!Tailwind CSS](#)
+[!Zustand](#)
+[!Framer Motion](#)
+
+</div>
+
+---
+
+## 📖 Overview
+
+This repository contains the client-side Next.js application for **AeroRoute**. It serves as the primary interface for managing and visualizing real-time human flow during mega-gatherings and dense urban events.
+
+The application features isolated workspaces for different user profiles (Commuters, Transit Drivers, and Fleet Operators) while operating on a shared intelligence network.
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js 15 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Animation:** Motion (Framer Motion)
+- **State Management:** Zustand
+- **Icons:** Lucide React
+- **Typography:** Bricolage Grotesque (Headings & Metrics) & Plus Jakarta Sans (UI/Body)
+- **Mapping:** Mapbox GL JS (implied integration for geospatial heatmaps and routing)
+
+## ✨ Key Features
+
+- **Three Profiles, One Network:**
+  - **Fleet Operators (Command Center):** High-level view of spatial heatmaps, predictive surge alerts, and global dispatch analytics.
+  - **Commuters (Attendees):** Minimal interface for dropping location "Pulses," requesting rides, and recording voice notes to flag hazards.
+  - **Transit Drivers (Pilots):** Distraction-free navigation canvas with dynamic re-routing around temporary hazards.
+- **Simulated Orchestration Engine:** Includes built-in simulated telemetry (pulses, hazards, fleet movement) for testing offline-first and predictive capabilities without backend dependencies.
+- **Responsive & Mobile-First:** Heavy focus on mobile usability, mimicking native app modal interactions and gesture-friendly layouts.
+- **Dark Mode Aesthetic:** High-contrast, neon-on-dark visual language optimized for outdoor readability and low-light environments.
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v18.17.0 or higher)
+- npm, yarn, pnpm, or bun
+
+### Environment Variables
+
+Create a `.env.local` file in the root of the `Frontend` directory and define the following variables:
+
+```env
+# Required for geospatial mapping capabilities
+NEXT_PUBLIC_MAPBOX_TOKEN=your_mapbox_public_token_here
+
+# Backend API endpoint (if running the full stack)
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository and navigate to the frontend directory:
+   ```bash
+   cd Frontend
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Install the dependencies:
+   ```bash
+   npm install
+   ```
 
-## Learn More
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. Open http://localhost:3000 in your browser to view the application.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Folder Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```text
+Frontend/
+├── app/                  # Next.js App Router root
+│   ├── layout.tsx        # Global layout, fonts, and base SEO metadata
+│   ├── page.tsx          # Landing page & marketing overview
+│   ├── select-role/      # Role selection entry point
+│   └── globals.css       # Global stylesheet & Tailwind directives
+├── components/           # Reusable React components
+│   ├── aero/             # Domain-specific components (Sidebar, CommuterModal, etc.)
+│   └── ui/               # Generic/atomic UI components (buttons, inputs)
+├── lib/                  # Utilities and core logic
+│   ├── store.ts          # Zustand state management setup
+│   ├── dummy-data.ts     # Local simulation data for the orchestration engine
+│   └── utils.ts          # Helper functions (e.g., Tailwind class merging)
+├── public/               # Static assets (images, SEO social cards, manifest)
+├── next.config.ts        # Next.js configuration
+└── tailwind.config.ts    # Tailwind CSS configuration
+```
 
-## Deploy on Vercel
+## 🧠 State Management
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project utilizes **Zustand** for lightweight, decentralized state management. 
+The primary store is defined in `lib/store.ts` (e.g., `useAero`) and manages:
+- Active navigation states (orchestration, fleet dispatch, timeline).
+- Modal visibility toggles (e.g., Timeline Drawer, Commuter Pulse Modal).
+- Real-time or simulated data arrays (active pulses, hazard regions).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎨 Typography & Design System
+
+The UI relies on a specific typographic hierarchy handled by `next/font/google`:
+- **Bricolage Grotesque:** Used for primary branding, headers, and numeric readouts (using `tabular-nums` for alignment).
+- **Plus Jakarta Sans:** Used for highly legible body text, micro-labels, and interface elements.
+
+Custom CSS utilities (like `.grid-bg`, `.radial-fade`, and radar animations) are defined inside `app/globals.css`.
