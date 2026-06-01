@@ -1,13 +1,18 @@
-import { motion } from "motion/react";
+"use client";
+
+import { motion } from "framer-motion";
 import { dummyFleets } from "@/lib/dummy-data";
 import { Truck, Settings as SettingsIcon, CalendarClock, Shield, Bell, Globe, AlertTriangle } from "lucide-react";
 import { useAero } from "@/lib/store";
 
 const statusColor = (s: string) =>
-  s === "en-route" ? "text-electric bg-electric/10 border-electric/20"
-  : s === "boarding" ? "text-emerald bg-emerald/10 border-emerald/20"
-  : s === "rerouting" ? "text-crimson bg-crimson/10 border-crimson/20"
-  : "text-muted-foreground bg-white/5 border-white/10";
+  s === "en-route"
+    ? "text-electric bg-electric/10 border-electric/20"
+    : s === "boarding"
+      ? "text-emerald bg-emerald/10 border-emerald/20"
+      : s === "rerouting"
+        ? "text-crimson bg-crimson/10 border-crimson/20"
+        : "text-muted-foreground bg-white/5 border-white/10";
 
 export function FleetView() {
   return (
@@ -31,20 +36,17 @@ export function FleetView() {
                   <div className="text-[10px] text-muted-foreground uppercase tracking-wider mt-0.5">Unit</div>
                 </div>
               </div>
-              <span className={`text-[10px] px-2 py-1 rounded border tracking-wider uppercase ${statusColor(f.status)}`}>
-                {f.status}
-              </span>
+              <span className={`text-[10px] px-2 py-1 rounded border tracking-wider uppercase ${statusColor(f.status)}`}>{f.status}</span>
             </div>
             <div className="mt-4">
               <div className="flex items-center justify-between text-[11px] text-muted-foreground mb-1.5">
                 <span>Occupancy</span>
-                <span className="num text-white">{f.occupied} / {f.capacity}</span>
+                <span className="num text-white">
+                  {f.occupied} / {f.capacity}
+                </span>
               </div>
               <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-electric to-emerald"
-                  style={{ width: `${(f.occupied / f.capacity) * 100}%` }}
-                />
+                <div className="h-full bg-gradient-to-r from-electric to-emerald" style={{ width: `${(f.occupied / f.capacity) * 100}%` }} />
               </div>
             </div>
             <div className="mt-3 pt-3 border-t border-white/5 grid grid-cols-2 gap-2 text-[11px]">
@@ -54,7 +56,9 @@ export function FleetView() {
               </div>
               <div>
                 <div className="text-muted-foreground">Position</div>
-                <div className="text-white num mt-0.5">{f.x}, {f.y}</div>
+                <div className="text-white num mt-0.5">
+                  {f.x}, {f.y}
+                </div>
               </div>
             </div>
           </motion.div>
@@ -65,8 +69,8 @@ export function FleetView() {
 }
 
 export function TimelineView() {
-  const schedule = useAero(s => s.schedule);
-  const setTimelineOpen = useAero(s => s.setTimelineOpen);
+  const schedule = useAero((s) => s.schedule);
+  const setTimelineOpen = useAero((s) => s.setTimelineOpen);
   return (
     <Panel
       title="Event Timeline"
@@ -138,7 +142,7 @@ export function SettingsView() {
 }
 
 function Panel({ title, icon, children, action }: { title: string; icon: React.ReactNode; children: React.ReactNode; action?: React.ReactNode }) {
-  const rightOpen = useAero(s => s.rightPanelOpen);
+  const rightOpen = useAero((s) => s.rightPanelOpen);
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -152,9 +156,7 @@ function Panel({ title, icon, children, action }: { title: string; icon: React.R
         <div className="text-sm font-semibold tracking-tight">{title}</div>
         {action && <div className="ml-auto">{action}</div>}
       </div>
-      <div className="flex-1 overflow-y-auto scrollbar-thin p-3 sm:p-5">
-        {children}
-      </div>
+      <div className="flex-1 overflow-y-auto scrollbar-thin p-3 sm:p-5">{children}</div>
     </motion.div>
   );
 }

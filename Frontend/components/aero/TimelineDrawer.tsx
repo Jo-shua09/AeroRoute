@@ -1,9 +1,8 @@
-import { motion, AnimatePresence } from "motion/react";
+"use client";
+
+import { motion, AnimatePresence } from "framer-motion";
 import { useMemo, useState } from "react";
-import {
-  X, Calendar, Upload, FileText, Sparkles, Loader2, Check,
-  Pencil, Trash2, AlertTriangle, Zap, Clock,
-} from "lucide-react";
+import { X, Calendar, Upload, FileText, Sparkles, Loader2, Check, Pencil, Trash2, AlertTriangle, Zap, Clock } from "lucide-react";
 import { toast } from "sonner";
 import { useAero, type SchedulePhase } from "@/lib/store";
 
@@ -20,13 +19,13 @@ function minutesUntil(hhmm: string) {
 }
 
 export function TimelineDrawer() {
-  const open = useAero(s => s.timelineOpen);
-  const setOpen = useAero(s => s.setTimelineOpen);
-  const schedule = useAero(s => s.schedule);
-  const addPhase = useAero(s => s.addPhase);
-  const removePhase = useAero(s => s.removePhase);
-  const aiOn = useAero(s => s.aiRoutingEnabled);
-  const setAi = useAero(s => s.setAiRoutingEnabled);
+  const open = useAero((s) => s.timelineOpen);
+  const setOpen = useAero((s) => s.setTimelineOpen);
+  const schedule = useAero((s) => s.schedule);
+  const addPhase = useAero((s) => s.addPhase);
+  const removePhase = useAero((s) => s.removePhase);
+  const aiOn = useAero((s) => s.aiRoutingEnabled);
+  const setAi = useAero((s) => s.setAiRoutingEnabled);
 
   const [tab, setTab] = useState<"manual" | "bulk">("manual");
   const [name, setName] = useState("");
@@ -35,10 +34,7 @@ export function TimelineDrawer() {
   const [volume, setVolume] = useState("");
   const [uploading, setUploading] = useState(false);
 
-  const sorted = useMemo(
-    () => [...schedule].sort((a, b) => a.endTime.localeCompare(b.endTime)),
-    [schedule]
-  );
+  const sorted = useMemo(() => [...schedule].sort((a, b) => a.endTime.localeCompare(b.endTime)), [schedule]);
 
   const inject = (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,7 +44,9 @@ export function TimelineDrawer() {
     }
     addPhase({ name, zone, endTime, volume: Number(volume) });
     toast.success("Injected into timeline", { description: `${name} · ${zone} · ${endTime}` });
-    setName(""); setEndTime(""); setVolume("");
+    setName("");
+    setEndTime("");
+    setVolume("");
   };
 
   const upload = () => {
@@ -86,9 +84,7 @@ export function TimelineDrawer() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-semibold tracking-tight">Timeline Orchestration Engine</div>
-                <div className="text-[11px] text-muted-foreground mt-0.5">
-                  Inject schedule parameters for predictive fleet dispatch.
-                </div>
+                <div className="text-[11px] text-muted-foreground mt-0.5">Inject schedule parameters for predictive fleet dispatch.</div>
               </div>
               <button
                 onClick={() => setOpen(false)}
@@ -105,9 +101,7 @@ export function TimelineDrawer() {
                 <Sparkles className="h-3.5 w-3.5 text-emerald" />
                 <div>
                   <div className="text-xs font-medium">Enable AI Predictive Routing</div>
-                  <div className="text-[10px] text-muted-foreground mt-0.5">
-                    Auto-dispatch fleets ahead of surge windows
-                  </div>
+                  <div className="text-[10px] text-muted-foreground mt-0.5">Auto-dispatch fleets ahead of surge windows</div>
                 </div>
               </div>
               <button
@@ -127,7 +121,7 @@ export function TimelineDrawer() {
               {/* tabs */}
               <div className="px-5 pt-4">
                 <div className="inline-flex p-1 rounded-lg bg-white/[0.04] border border-[var(--hairline)] text-[11px]">
-                  {(["manual", "bulk"] as const).map(t => (
+                  {(["manual", "bulk"] as const).map((t) => (
                     <button
                       key={t}
                       onClick={() => setTab(t)}
@@ -146,31 +140,26 @@ export function TimelineDrawer() {
                 {tab === "manual" ? (
                   <form onSubmit={inject} className="grid grid-cols-2 gap-3">
                     <Field label="Event Phase Name" full>
-                      <input
-                        value={name} onChange={e => setName(e.target.value)}
-                        placeholder="e.g. Closing Prayer"
-                        className="aero-input"
-                      />
+                      <input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Closing Prayer" className="aero-input" />
                     </Field>
                     <Field label="Target Geofence / Zone">
-                      <select
-                        value={zone} onChange={e => setZone(e.target.value)}
-                        className="aero-input appearance-none cursor-pointer"
-                      >
-                        {ZONES.map(z => <option key={z} value={z}>{z}</option>)}
+                      <select value={zone} onChange={(e) => setZone(e.target.value)} className="aero-input appearance-none cursor-pointer">
+                        {ZONES.map((z) => (
+                          <option key={z} value={z}>
+                            {z}
+                          </option>
+                        ))}
                       </select>
                     </Field>
                     <Field label="Estimated End Time">
-                      <input
-                        type="time" value={endTime}
-                        onChange={e => setEndTime(e.target.value)}
-                        className="aero-input num"
-                      />
+                      <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} className="aero-input num" />
                     </Field>
                     <Field label="Projected Crowd Volume" full>
                       <input
-                        type="number" min={0} value={volume}
-                        onChange={e => setVolume(e.target.value)}
+                        type="number"
+                        min={0}
+                        value={volume}
+                        onChange={(e) => setVolume(e.target.value)}
                         placeholder="e.g. 22000"
                         className="aero-input num"
                       />
@@ -210,9 +199,7 @@ export function TimelineDrawer() {
               {/* Active timeline feed */}
               <div className="px-5 pb-6">
                 <div className="flex items-center justify-between mb-3">
-                  <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                    Active Timeline Feed
-                  </div>
+                  <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Active Timeline Feed</div>
                   <span className="text-[10px] text-emerald flex items-center gap-1">
                     <span className="h-1 w-1 rounded-full bg-emerald animate-pulse" /> SYNCING
                   </span>
@@ -221,7 +208,9 @@ export function TimelineDrawer() {
                 <div className="relative pl-5">
                   <div className="absolute left-[7px] top-1 bottom-1 w-px bg-[var(--hairline)]" />
                   <AnimatePresence initial={false}>
-                    {sorted.map(p => <PhaseCard key={p.id} phase={p} onDelete={() => removePhase(p.id)} />)}
+                    {sorted.map((p) => (
+                      <PhaseCard key={p.id} phase={p} onDelete={() => removePhase(p.id)} />
+                    ))}
                   </AnimatePresence>
                 </div>
               </div>
@@ -275,16 +264,12 @@ function PhaseCard({ phase, onDelete }: { phase: SchedulePhase; onDelete: () => 
     >
       <span
         className={`absolute -left-5 top-2.5 h-2.5 w-2.5 rounded-full ring-2 ring-[var(--app-bg)] ${
-          imminent ? "bg-crimson shadow-[0_0_10px_var(--crimson)]"
-          : past ? "bg-white/20"
-          : "bg-emerald shadow-[0_0_8px_var(--emerald)]"
+          imminent ? "bg-crimson shadow-[0_0_10px_var(--crimson)]" : past ? "bg-white/20" : "bg-emerald shadow-[0_0_8px_var(--emerald)]"
         }`}
       />
       <div
         className={`rounded-xl border bg-white/[0.02] p-3 transition ${
-          imminent
-            ? "border-crimson/40 pulse-crimson"
-            : "border-[var(--hairline)] hover:border-[var(--hairline-strong)]"
+          imminent ? "border-crimson/40 pulse-crimson" : "border-[var(--hairline)] hover:border-[var(--hairline-strong)]"
         }`}
       >
         <div className="flex items-center justify-between gap-2">

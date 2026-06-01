@@ -1,28 +1,19 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Sidebar } from "@/components/aero/Sidebar";
 import { MapCanvas, type LayerToggles } from "@/components/aero/MapCanvas";
-import { RightPanel } from "@/components/aero/RightPanel";
 import { BottomBar } from "@/components/aero/BottomBar";
 import { TopBar } from "@/components/aero/TopBar";
 import { CommuterModal } from "@/components/aero/CommuterModal";
 import { FleetView, TimelineView, SettingsView } from "@/components/aero/SectionViews";
+import { RightPanel } from "@/components/aero/RightPanel"; // Kept import as it seems used
 import { TimelineDrawer } from "@/components/aero/TimelineDrawer";
 import { navItems, type NavId } from "@/lib/dummy-data";
 import { useAero } from "@/lib/store";
 
-export const Route = createFileRoute("/fleet")({
-  head: () => ({
-    meta: [
-      { title: "Command Center — AeroRoute" },
-      { name: "description", content: "Global macro map, fleet dispatch matrices, and AI predictive timeline feeds." },
-    ],
-  }),
-  component: FleetDashboard,
-});
-
-function FleetDashboard() {
+export default function FleetDashboard() {
   const [active, setActive] = useState<NavId>("orchestration");
   const [modalOpen, setModalOpen] = useState(false);
   const [layers, setLayers] = useState<LayerToggles>({ heatmap: true, hazards: true, fleets: true });
@@ -30,6 +21,11 @@ function FleetDashboard() {
   const rightOpen = useAero((s) => s.rightPanelOpen);
   const mobileNav = useAero((s) => s.mobileNavOpen);
   const setMobileNav = useAero((s) => s.setMobileNavOpen);
+
+  // Update document title on client side since this is a client component
+  useEffect(() => {
+    document.title = "Command Center — AeroRoute";
+  }, []);
 
   const activeLabel = navItems.find((n) => n.id === active)?.label ?? "";
 

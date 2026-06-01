@@ -1,4 +1,6 @@
-import { motion, AnimatePresence } from "motion/react";
+"use client";
+
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { AlertTriangle, TrendingUp, Truck, Sparkles, Clock, ChevronRight, PanelRightClose } from "lucide-react";
 import { dummyTriage, type TriageItem } from "@/lib/dummy-data";
@@ -7,7 +9,7 @@ import { useAero } from "@/lib/store";
 function useCountdown(seconds: number) {
   const [s, setS] = useState(seconds);
   useEffect(() => {
-    const id = setInterval(() => setS(prev => (prev > 0 ? prev - 1 : seconds)), 1000);
+    const id = setInterval(() => setS((prev) => (prev > 0 ? prev - 1 : seconds)), 1000);
     return () => clearInterval(id);
   }, [seconds]);
   const m = Math.floor(s / 60);
@@ -15,18 +17,19 @@ function useCountdown(seconds: number) {
   return `${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
 }
 
-const iconFor = (k: TriageItem["kind"]) =>
-  k === "hazard" ? AlertTriangle : k === "demand" ? TrendingUp : Truck;
+const iconFor = (k: TriageItem["kind"]) => (k === "hazard" ? AlertTriangle : k === "demand" ? TrendingUp : Truck);
 const colorFor = (k: TriageItem["kind"]) =>
-  k === "hazard" ? "text-crimson bg-crimson/10 border-crimson/20"
-  : k === "demand" ? "text-emerald bg-emerald/10 border-emerald/20"
-  : "text-electric bg-electric/10 border-electric/20";
+  k === "hazard"
+    ? "text-crimson bg-crimson/10 border-crimson/20"
+    : k === "demand"
+      ? "text-emerald bg-emerald/10 border-emerald/20"
+      : "text-electric bg-electric/10 border-electric/20";
 
 export function RightPanel() {
   const countdown = useCountdown(872);
-  const open = useAero(s => s.rightPanelOpen);
-  const toggle = useAero(s => s.toggleRightPanel);
-  const schedule = useAero(s => s.schedule);
+  const open = useAero((s) => s.rightPanelOpen);
+  const toggle = useAero((s) => s.toggleRightPanel);
+  const schedule = useAero((s) => s.schedule);
 
   return (
     <>
@@ -80,9 +83,7 @@ export function RightPanel() {
             </div>
 
             <div className="px-5 py-4 border-b border-[var(--hairline)]">
-              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-2">
-                Next Event Surge
-              </div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-2">Next Event Surge</div>
               <div className="rounded-xl bg-gradient-to-br from-white/[0.04] to-transparent border border-[var(--hairline-strong)] p-4 relative overflow-hidden">
                 <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-emerald/10 blur-3xl" />
                 <div className="relative">
@@ -107,21 +108,17 @@ export function RightPanel() {
             </div>
 
             <div className="px-5 py-4 border-b border-[var(--hairline)]">
-              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-3">
-                Event Timeline
-              </div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-3">Event Timeline</div>
               <div className="relative space-y-2.5">
                 <div className="absolute left-[5px] top-1 bottom-1 w-px bg-[var(--hairline)]" />
-                {schedule.slice(0, 5).map(ev => (
+                {schedule.slice(0, 5).map((ev) => (
                   <div key={ev.id} className="relative flex items-center gap-3 pl-4">
                     <span className="absolute left-0 top-1.5 h-2.5 w-2.5 rounded-full ring-2 ring-[var(--app-bg)] bg-emerald shadow-[0_0_8px_var(--emerald)]" />
                     <span className="text-[11px] num text-muted-foreground w-10">{ev.endTime}</span>
                     <div className="flex-1 min-w-0">
                       <div className="text-xs truncate">{ev.name}</div>
                     </div>
-                    <span className="text-[10px] num text-muted-foreground">
-                      {(ev.volume / 1000).toFixed(1)}k
-                    </span>
+                    <span className="text-[10px] num text-muted-foreground">{(ev.volume / 1000).toFixed(1)}k</span>
                   </div>
                 ))}
               </div>
@@ -129,9 +126,7 @@ export function RightPanel() {
 
             <div className="flex-1 overflow-hidden flex flex-col min-h-0">
               <div className="px-5 pt-4 pb-2 flex items-center justify-between">
-                <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                  Live AI Triage Feed
-                </div>
+                <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Live AI Triage Feed</div>
                 <div className="text-[10px] text-emerald flex items-center gap-1">
                   <span className="h-1 w-1 rounded-full bg-emerald animate-pulse" />
                   STREAMING

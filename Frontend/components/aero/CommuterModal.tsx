@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect } from "react";
 import { X, MapPin, AlertTriangle, Mic, Check, Loader2, Battery, Wifi, Signal } from "lucide-react";
@@ -10,7 +12,7 @@ export function CommuterModal({ open, onClose }: Props) {
   const [stage, setStage] = useState<"idle" | "sending" | "sent">("idle");
   const [hazardOn, setHazardOn] = useState(false);
   const [recording, setRecording] = useState(false);
-  const dropPulse = useAero(s => s.dropPulse);
+  const dropPulse = useAero((s) => s.dropPulse);
 
   useEffect(() => {
     if (!open) {
@@ -93,13 +95,7 @@ export function CommuterModal({ open, onClose }: Props) {
 
                   <AnimatePresence mode="wait">
                     {stage === "idle" && (
-                      <motion.div
-                        key="idle"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="mt-5 space-y-3"
-                      >
+                      <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="mt-5 space-y-3">
                         <button
                           onClick={handleRequest}
                           className="w-full rounded-2xl bg-emerald text-black font-semibold py-4 flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition"
@@ -119,7 +115,7 @@ export function CommuterModal({ open, onClose }: Props) {
                             </div>
                           </div>
                           <button
-                            onClick={() => setHazardOn(v => !v)}
+                            onClick={() => setHazardOn((v) => !v)}
                             className={`relative h-5 w-9 rounded-full transition ${hazardOn ? "bg-crimson" : "bg-white/10"}`}
                           >
                             <motion.span
@@ -138,7 +134,9 @@ export function CommuterModal({ open, onClose }: Props) {
                           onTouchEnd={() => setRecording(false)}
                           className="w-full rounded-2xl bg-white/[0.03] border border-white/5 py-3.5 px-4 flex items-center gap-3 hover:bg-white/[0.05] transition"
                         >
-                          <div className={`h-9 w-9 rounded-full flex items-center justify-center transition ${recording ? "bg-crimson" : "bg-white/10"}`}>
+                          <div
+                            className={`h-9 w-9 rounded-full flex items-center justify-center transition ${recording ? "bg-crimson" : "bg-white/10"}`}
+                          >
                             <Mic className={`h-4 w-4 ${recording ? "text-white" : "text-white/70"}`} />
                           </div>
                           <div className="flex-1 text-left">
@@ -147,9 +145,13 @@ export function CommuterModal({ open, onClose }: Props) {
                               {Array.from({ length: 22 }).map((_, i) => (
                                 <motion.span
                                   key={i}
-                                  animate={recording ? {
-                                    height: [4, 10 + ((i * 7) % 10), 4],
-                                  } : { height: 3 }}
+                                  animate={
+                                    recording
+                                      ? {
+                                          height: [4, 10 + ((i * 7) % 10), 4],
+                                        }
+                                      : { height: 3 }
+                                  }
                                   transition={{
                                     duration: 0.6,
                                     repeat: recording ? Infinity : 0,
@@ -190,9 +192,7 @@ export function CommuterModal({ open, onClose }: Props) {
                           <Check className="h-5 w-5 text-black" />
                         </div>
                         <div className="text-sm text-white font-medium">Pulse Sent</div>
-                        <div className="text-[11px] text-muted-foreground text-center">
-                          Analyzing safe route · Bypassing 1 hazard zone
-                        </div>
+                        <div className="text-[11px] text-muted-foreground text-center">Analyzing safe route · Bypassing 1 hazard zone</div>
                         <div className="mt-2 flex items-center gap-2 text-[10px] text-emerald">
                           <span className="h-1 w-1 rounded-full bg-emerald animate-pulse" />
                           AR-12 dispatched · ETA 4 min

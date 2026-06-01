@@ -1,3 +1,5 @@
+"use client";
+
 import { Flame, AlertTriangle, Navigation, Layers, Maximize2 } from "lucide-react";
 import { motion } from "motion/react";
 import type { LayerToggles } from "./MapCanvas";

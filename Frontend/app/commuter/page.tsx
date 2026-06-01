@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+"use client";
+
 import { motion, AnimatePresence } from "motion/react";
 import { useEffect, useState } from "react";
 import { MapPin, Mic, AlertTriangle, Check, Loader2, Battery, Wifi, Signal, Bus, Navigation, Radio } from "lucide-react";
@@ -7,19 +8,9 @@ import { ThemeToggle } from "@/components/aero/ThemeToggle";
 import { toast } from "sonner";
 import { useAero } from "@/lib/store";
 
-export const Route = createFileRoute("/commuter")({
-  head: () => ({
-    meta: [
-      { title: "Attendee Terminal — AeroRoute" },
-      { name: "description", content: "Drop transit pulses, send voice hazard reports, and get proximity shuttle ETAs." },
-    ],
-  }),
-  component: CommuterDashboard,
-});
-
 const PIDGIN_NOTE = "Water don block estate road junction, massive crowd dey here.";
 
-function CommuterDashboard() {
+export default function CommuterDashboard() {
   const [stage, setStage] = useState<"idle" | "sending" | "sent">("idle");
   const [recording, setRecording] = useState(false);
   const [transcript, setTranscript] = useState("");
@@ -37,6 +28,11 @@ function CommuterDashboard() {
     }, 35);
     return () => clearInterval(id);
   }, [recording]);
+
+  // Update document title
+  useEffect(() => {
+    document.title = "Attendee Terminal — AeroRoute";
+  }, []);
 
   const dropPulse = useAero((s) => s.dropPulse);
   const handlePulse = () => {

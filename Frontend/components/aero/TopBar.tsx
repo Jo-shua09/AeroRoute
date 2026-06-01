@@ -1,3 +1,5 @@
+"use client";
+
 import { Search, Bell, Menu } from "lucide-react";
 import { useEffect, useState } from "react";
 import { RoleSwitcher } from "./RoleSwitcher";
@@ -6,8 +8,8 @@ import { useAero } from "@/lib/store";
 
 export function TopBar({ section }: { section: string }) {
   const [time, setTime] = useState(() => new Date());
-  const setMobileNav = useAero(s => s.setMobileNavOpen);
-  const rightOpen = useAero(s => s.rightPanelOpen);
+  const setMobileNav = useAero((s) => s.setMobileNavOpen);
+  const rightOpen = useAero((s) => s.rightPanelOpen);
 
   useEffect(() => {
     const id = setInterval(() => setTime(new Date()), 1000);
@@ -32,7 +34,9 @@ export function TopBar({ section }: { section: string }) {
 
       <div className="glass-strong rounded-xl px-3 sm:px-4 h-11 flex items-center gap-2 sm:gap-3 pointer-events-auto shrink-0">
         <span className="h-1.5 w-1.5 rounded-full bg-emerald animate-pulse" />
-        <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.15em] text-muted-foreground truncate max-w-[110px] sm:max-w-none">{section}</span>
+        <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.15em] text-muted-foreground truncate max-w-[110px] sm:max-w-none">
+          {section}
+        </span>
         <span className="text-foreground/30 hidden sm:inline">/</span>
         <span className="text-xs hidden sm:inline">Live</span>
       </div>

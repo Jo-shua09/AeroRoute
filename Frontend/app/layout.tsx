@@ -13,8 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AeroRoute",
-  description: "Advanced flight routing and navigation",
+  title: "AeroRoute — Real-Time Human Flow Orchestration",
+  description: "AI-powered predictive crowd intelligence and logistics routing for mega-gatherings and dense urban hubs.", // Updated description
+  openGraph: {
+    // Added OpenGraph metadata from page.tsx
+    title: "AeroRoute — Real-Time Human Flow Orchestration",
+    description: "Predictive crowd intelligence and logistics routing for mega-events.",
+  },
 };
 
 export default function RootLayout({
@@ -23,8 +28,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-full flex flex-col`}>{children}</body>
+    <html lang="en" className="h-full dark">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-full bg-[#0A0A0A] text-foreground`}>{children}</body>
     </html>
   );
 }

@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Activity, Truck, CalendarClock, Settings, Radio, TrendingUp, ChevronLeft, Smartphone, Calendar } from "lucide-react";
 import { useState } from "react";
 import type { NavId } from "@/lib/dummy-data";
@@ -19,8 +19,8 @@ type Props = {
 
 export function Sidebar({ active, onChange, onSimulate }: Props) {
   const [collapsed, setCollapsed] = useState(false);
-  const openTimeline = useAero(s => s.setTimelineOpen);
-  const pulses = useAero(s => s.pulses);
+  const openTimeline = useAero((s) => s.setTimelineOpen);
+  const pulses = useAero((s) => s.pulses);
 
   return (
     <motion.aside
@@ -41,7 +41,7 @@ export function Sidebar({ active, onChange, onSimulate }: Props) {
           )}
         </div>
         <button
-          onClick={() => setCollapsed(c => !c)}
+          onClick={() => setCollapsed((c) => !c)}
           className="hidden lg:flex h-7 w-7 rounded-md hover:bg-white/5 text-muted-foreground items-center justify-center transition"
           aria-label="Toggle sidebar"
         >
@@ -50,7 +50,7 @@ export function Sidebar({ active, onChange, onSimulate }: Props) {
       </div>
 
       <nav className="px-3 py-4 space-y-1">
-        {items.map(item => {
+        {items.map((item) => {
           const Icon = item.icon;
           const isActive = item.id === active;
           return (
@@ -61,17 +61,10 @@ export function Sidebar({ active, onChange, onSimulate }: Props) {
                 isActive ? "bg-white/[0.06] text-foreground" : "text-muted-foreground hover:bg-white/[0.03] hover:text-foreground"
               }`}
             >
-              {isActive && (
-                <motion.span
-                  layoutId="nav-active"
-                  className="absolute left-0 top-1.5 bottom-1.5 w-[2px] rounded-r bg-emerald"
-                />
-              )}
+              {isActive && <motion.span layoutId="nav-active" className="absolute left-0 top-1.5 bottom-1.5 w-[2px] rounded-r bg-emerald" />}
               <Icon className="h-4 w-4 shrink-0" />
               {!collapsed && <span className="truncate">{item.label}</span>}
-              {!collapsed && isActive && (
-                <span className="ml-auto h-1.5 w-1.5 rounded-full bg-emerald shadow-[0_0_8px_var(--emerald)]" />
-              )}
+              {!collapsed && isActive && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-emerald shadow-[0_0_8px_var(--emerald)]" />}
             </button>
           );
         })}
@@ -79,9 +72,7 @@ export function Sidebar({ active, onChange, onSimulate }: Props) {
 
       {!collapsed && (
         <div className="px-4 mt-2 space-y-2.5 flex-1 overflow-y-auto scrollbar-thin">
-          <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground/70 mb-1 px-1">
-            Global Analytics
-          </div>
+          <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground/70 mb-1 px-1">Global Analytics</div>
 
           <MetricCard
             label="Active Pulses"
@@ -91,13 +82,7 @@ export function Sidebar({ active, onChange, onSimulate }: Props) {
             icon={<TrendingUp className="h-3.5 w-3.5" />}
           />
           <MetricCard label="Fleet Deployed" value="84" sub="/ 100" barPct={84} />
-          <MetricCard
-            label="Avg Transit Latency"
-            value="14"
-            sub="min"
-            trend="-2m"
-            trendColor="text-emerald"
-          />
+          <MetricCard label="Avg Transit Latency" value="14" sub="min" trend="-2m" trendColor="text-emerald" />
 
           <button
             onClick={() => openTimeline(true)}
@@ -111,9 +96,7 @@ export function Sidebar({ active, onChange, onSimulate }: Props) {
           </button>
 
           <div className="pt-3">
-            <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground/70 mb-2 px-1">
-              System Health
-            </div>
+            <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground/70 mb-2 px-1">System Health</div>
             <div className="rounded-lg bg-card border border-[var(--hairline)] p-3 flex items-center gap-3">
               <div className="relative h-2 w-2">
                 <span className="absolute inset-0 rounded-full bg-emerald" />
@@ -167,10 +150,21 @@ export function Sidebar({ active, onChange, onSimulate }: Props) {
 }
 
 function MetricCard({
-  label, value, sub, trend, trendColor, icon, barPct,
+  label,
+  value,
+  sub,
+  trend,
+  trendColor,
+  icon,
+  barPct,
 }: {
-  label: string; value: string; sub?: string; trend?: string;
-  trendColor?: string; icon?: React.ReactNode; barPct?: number;
+  label: string;
+  value: string;
+  sub?: string;
+  trend?: string;
+  trendColor?: string;
+  icon?: React.ReactNode;
+  barPct?: number;
 }) {
   return (
     <div className="rounded-lg bg-card border border-[var(--hairline)] p-3 hover:border-[var(--hairline-strong)] transition">
@@ -178,7 +172,8 @@ function MetricCard({
         <span className="text-[11px] text-muted-foreground">{label}</span>
         {trend && (
           <span className={`text-[10px] flex items-center gap-1 ${trendColor}`}>
-            {icon}{trend}
+            {icon}
+            {trend}
           </span>
         )}
       </div>

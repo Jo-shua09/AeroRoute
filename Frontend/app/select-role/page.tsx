@@ -1,24 +1,14 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { motion } from "motion/react";
-import { Activity, Smartphone, Truck, ArrowLeft, ArrowRight, Radio } from "lucide-react";
+"use client";
 
-export const Route = createFileRoute("/select-role")({
-  head: () => ({
-    meta: [
-      { title: "Select Operational Profile — AeroRoute" },
-      {
-        name: "description",
-        content: "Choose an interface to initialize localized telemetry: Command Center, Attendee Terminal, or Pilot Dashboard.",
-      },
-    ],
-  }),
-  component: SelectRole,
-});
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { Activity, Smartphone, Truck, ArrowLeft, ArrowRight, Radio } from "lucide-react";
 
 const roles = [
   {
     id: "fleet",
-    to: "/fleet" as const,
+    href: "/fleets",
     icon: Activity,
     accent: "text-electric",
     tag: "Operator",
@@ -28,7 +18,7 @@ const roles = [
   },
   {
     id: "commuter",
-    to: "/commuter" as const,
+    href: "/commuter",
     icon: Smartphone,
     accent: "text-emerald",
     tag: "Attendee",
@@ -38,7 +28,7 @@ const roles = [
   },
   {
     id: "driver",
-    to: "/driver" as const,
+    href: "/driver",
     icon: Truck,
     accent: "text-crimson",
     tag: "Pilot",
@@ -48,8 +38,8 @@ const roles = [
   },
 ];
 
-function SelectRole() {
-  const navigate = useNavigate();
+export default function SelectRole() {
+  const router = useRouter();
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-[#0A0A0A] text-foreground">
@@ -58,13 +48,13 @@ function SelectRole() {
       <div className="pointer-events-none absolute left-1/2 top-[-160px] -translate-x-1/2 h-[500px] w-[800px] rounded-full bg-emerald/[0.05] blur-[120px]" />
 
       <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-        <Link to="/" className="flex items-center gap-2.5">
+        <Link href="/" className="flex items-center gap-2.5">
           <div className="relative h-8 w-8 rounded-md bg-gradient-to-br from-emerald/30 to-electric/20 border border-white/10 flex items-center justify-center">
             <Radio className="h-4 w-4 text-emerald" />
           </div>
           <span className="text-[15px] font-semibold tracking-tight">AeroRoute</span>
         </Link>
-        <Link to="/" className="text-xs text-muted-foreground hover:text-white transition flex items-center gap-1.5">
+        <Link href="/" className="text-xs text-muted-foreground hover:text-white transition flex items-center gap-1.5">
           <ArrowLeft className="h-3 w-3" /> Back
         </Link>
       </header>
@@ -97,7 +87,7 @@ function SelectRole() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
                 whileHover={{ y: -4 }}
-                onClick={() => navigate({ to: r.to })}
+                onClick={() => router.push(r.href)}
                 className="group relative text-left rounded-2xl border border-white/10 bg-[#0d0d0d] p-6 hover:border-white/20 hover:bg-[#111111] transition-all overflow-hidden"
               >
                 <div className="pointer-events-none absolute -top-20 -right-20 h-44 w-44 rounded-full bg-emerald/[0.06] blur-3xl opacity-0 group-hover:opacity-100 transition" />
