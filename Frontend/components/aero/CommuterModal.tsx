@@ -74,7 +74,7 @@ export function CommuterModal({ open, onClose }: Props) {
                 <div className="px-6 pt-4 pb-7">
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="text-[10px] uppercase tracking-[0.2em] text-emerald">AeroRoute</div>
+                      <div className="text-[10px] uppercase tracking-[0.2em] text-emerald font-heading font-medium">AeroRoute</div>
                       <div className="text-lg font-semibold mt-0.5">Commuter</div>
                     </div>
                     <div className="text-right">
@@ -90,7 +90,7 @@ export function CommuterModal({ open, onClose }: Props) {
                         <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald shadow-[0_0_12px_var(--emerald)]" />
                       </span>
                     </div>
-                    <div className="absolute bottom-2 left-3 text-[9px] text-muted-foreground">You're here</div>
+                    <div className="absolute bottom-2 left-3 text-[9px] text-muted-foreground">You&apos;re here</div>
                   </div>
 
                   <AnimatePresence mode="wait">

@@ -20,7 +20,7 @@ export default function Landing() {
             <Radio className="h-4 w-4 text-emerald" />
           </div>
           <div className="flex flex-col leading-none">
-            <span className="text-[15px] font-semibold tracking-tight">AeroRoute</span>
+            <span className="text-[15px] font-semibold tracking-tight font-heading">AeroRoute</span>
             <span className="text-[9px] text-muted-foreground tracking-[0.18em] uppercase mt-0.5">Orchestration OS</span>
           </div>
         </Link>
@@ -277,7 +277,7 @@ export default function Landing() {
       <footer className="relative z-10 mx-auto max-w-7xl px-6 py-10 border-t border-white/5 flex flex-col sm:flex-row gap-4 items-center justify-between">
         <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
           <Radio className="h-3.5 w-3.5 text-emerald" />
-          AeroRoute · Orchestration OS
+          <span className="font-heading font-medium">AeroRoute</span> · Orchestration OS
         </div>
         <div className="text-[10px] text-muted-foreground tracking-wider uppercase">© 2026 · Built for mega-gatherings</div>
       </footer>

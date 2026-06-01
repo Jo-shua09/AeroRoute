@@ -42,7 +42,7 @@ export function RightPanel() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
             onClick={toggle}
-            className="hidden md:flex absolute right-4 top-4 z-20 glass-strong rounded-xl h-11 px-3 items-center gap-2 text-xs hover:bg-white/5 transition"
+            className="hidden md:flex absolute right-4 top-20 z-20 glass-strong rounded-xl h-11 px-3 items-center gap-2 text-xs hover:bg-white/5 transition"
             aria-label="Open AI panel"
           >
             <Sparkles className="h-3.5 w-3.5 text-emerald" />

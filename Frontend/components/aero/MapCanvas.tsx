@@ -187,7 +187,7 @@ export function MapCanvas({ layers }: { layers: LayerToggles }) {
       </AnimatePresence>
 
       {/* corner coordinates */}
-      <div className="absolute top-4 right-4 text-[10px] text-muted-foreground/60 font-mono tracking-wider">06.5244° N · 03.3792° E</div>
+      <div className="absolute top-1 right-4 text-[10px] text-muted-foreground/60 font-mono tracking-wider">06.5244° N · 03.3792° E</div>
       <div className="absolute bottom-24 left-4 text-[10px] text-muted-foreground/60 font-mono tracking-wider space-y-0.5">
         <div>ZONE: ALPHA-7</div>
         <div>SCALE: 1 : 2,400</div>

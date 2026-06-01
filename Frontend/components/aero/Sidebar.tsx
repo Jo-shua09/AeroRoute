@@ -35,7 +35,7 @@ export function Sidebar({ active, onChange, onSimulate }: Props) {
           </div>
           {!collapsed && (
             <div className="flex flex-col leading-none">
-              <span className="text-[15px] font-semibold tracking-tight">AeroRoute</span>
+              <span className="text-[15px] font-semibold tracking-tight font-heading">AeroRoute</span>
               <span className="text-[10px] text-muted-foreground tracking-[0.15em] uppercase mt-0.5">Orchestration</span>
             </div>
           )}

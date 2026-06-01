@@ -1,15 +1,17 @@
 "use client";
 
-import { Search, Bell, Menu } from "lucide-react";
+import { Search, Bell, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { RoleSwitcher } from "./RoleSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
 import { useAero } from "@/lib/store";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function TopBar({ section }: { section: string }) {
   const [time, setTime] = useState(() => new Date());
   const setMobileNav = useAero((s) => s.setMobileNavOpen);
   const rightOpen = useAero((s) => s.rightPanelOpen);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     const id = setInterval(() => setTime(new Date()), 1000);
@@ -20,7 +22,7 @@ export function TopBar({ section }: { section: string }) {
 
   return (
     <div
-      className="absolute top-2 sm:top-4 left-2 sm:left-4 z-20 flex items-center gap-2 sm:gap-3 pointer-events-none"
+      className="absolute top-2 sm:top-6 left-2 sm:left-4 z-20 flex items-center gap-2 sm:gap-3 pointer-events-none"
       style={{ right: rightOpen ? "calc(380px + 1rem)" : "1rem" }}
     >
       {/* mobile hamburger */}
@@ -41,13 +43,39 @@ export function TopBar({ section }: { section: string }) {
         <span className="text-xs hidden sm:inline">Live</span>
       </div>
 
-      <div className="glass-strong rounded-xl px-3.5 h-11 hidden md:flex items-center gap-2 flex-1 max-w-md pointer-events-auto">
-        <Search className="h-3.5 w-3.5 text-muted-foreground" />
-        <input
-          placeholder="Search zones, fleet units, hazards…"
-          className="bg-transparent text-xs outline-none flex-1 placeholder:text-muted-foreground/70"
-        />
-        <kbd className="text-[10px] px-1.5 py-0.5 rounded bg-white/5 border border-[var(--hairline)] text-muted-foreground">⌘K</kbd>
+      <div className="flex items-center pointer-events-auto">
+        <AnimatePresence mode="wait">
+          {!searchOpen ? (
+            <motion.button
+              key="search-trigger"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              onClick={() => setSearchOpen(true)}
+              className="glass-strong rounded-xl h-11 w-11 flex items-center justify-center hover:bg-white/5 transition"
+            >
+              <Search className="h-4 w-4 text-muted-foreground" />
+            </motion.button>
+          ) : (
+            <motion.div
+              key="search-input"
+              initial={{ width: 44, opacity: 0 }}
+              animate={{ width: "clamp(160px, 30vw, 300px)", opacity: 1 }}
+              exit={{ width: 44, opacity: 0 }}
+              className="glass-strong rounded-xl h-11 px-3.5 flex items-center gap-2 overflow-hidden"
+            >
+              <Search className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+              <input
+                autoFocus
+                placeholder="Search..."
+                className="bg-transparent text-xs outline-none flex-1 placeholder:text-muted-foreground/70 min-w-0"
+              />
+              <button onClick={() => setSearchOpen(false)} className="p-1 hover:bg-white/10 rounded-md transition">
+                <X className="h-3 w-3 text-muted-foreground" />
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       <div className="ml-auto flex items-center gap-2">
