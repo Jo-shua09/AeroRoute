@@ -15,11 +15,13 @@ export function CommuterModal({ open, onClose }: Props) {
   const dropPulse = useAero((s) => s.dropPulse);
 
   useEffect(() => {
-    if (!open) {
+    if (!open) return;
+
+    return () => {
       setStage("idle");
       setHazardOn(false);
       setRecording(false);
-    }
+    };
   }, [open]);
 
   const handleRequest = () => {

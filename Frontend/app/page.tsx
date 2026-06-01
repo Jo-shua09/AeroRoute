@@ -203,7 +203,7 @@ export default function Landing() {
           <div className="text-[10px] uppercase tracking-[0.22em] text-emerald">Three Profiles · One Network</div>
           <h2 className="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight">Every role gets the surface it needs.</h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Isolated interfaces. Shared intelligence. Built so a driver, a commuter, and a command center never see a feature that isn't theirs.
+            Isolated interfaces. Shared intelligence. Built so a driver, a commuter, and a command center never see a feature that isn&apos;t theirs.
           </p>
         </div>
 
