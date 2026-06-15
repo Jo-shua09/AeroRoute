@@ -106,13 +106,13 @@ export function TimelineDrawer() {
               </div>
               <button
                 onClick={() => setAi(!aiOn)}
-                className={`relative h-5 w-9 rounded-full transition ${aiOn ? "bg-emerald" : "bg-white/15"}`}
+                className={`relative h-5 w-9 rounded-full transition shrink-0 ${aiOn ? "bg-emerald" : "bg-white/15"}`}
                 aria-pressed={aiOn}
               >
                 <motion.span
-                  animate={{ x: aiOn ? 16 : 2 }}
+                  animate={{ x: aiOn ? 18 : 2 }}
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                  className="absolute top-0.5 h-4 w-4 rounded-full bg-white"
+                  className="absolute left-0 top-0.5 h-4 w-4 rounded-full bg-white"
                 />
               </button>
             </div>

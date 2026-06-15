@@ -118,12 +118,12 @@ export function CommuterModal({ open, onClose }: Props) {
                           </div>
                           <button
                             onClick={() => setHazardOn((v) => !v)}
-                            className={`relative h-5 w-9 rounded-full transition ${hazardOn ? "bg-crimson" : "bg-white/10"}`}
+                            className={`relative h-5 w-9 rounded-full transition shrink-0 ${hazardOn ? "bg-crimson" : "bg-white/10"}`}
                           >
                             <motion.span
-                              animate={{ x: hazardOn ? 16 : 2 }}
+                              animate={{ x: hazardOn ? 18 : 2 }}
                               transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                              className="absolute top-0.5 h-4 w-4 rounded-full bg-white"
+                              className="absolute left-0 top-0.5 h-4 w-4 rounded-full bg-white"
                             />
                           </button>
                         </div>

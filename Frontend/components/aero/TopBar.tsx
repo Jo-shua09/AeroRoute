@@ -7,11 +7,24 @@ import { ThemeToggle } from "./ThemeToggle";
 import { useAero } from "@/lib/store";
 import { motion, AnimatePresence } from "framer-motion";
 
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia(query);
+    setMatches(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setMatches(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, [query]);
+  return matches;
+}
+
 export function TopBar({ section }: { section: string }) {
   const [time, setTime] = useState(() => new Date());
   const setMobileNav = useAero((s) => s.setMobileNavOpen);
   const rightOpen = useAero((s) => s.rightPanelOpen);
   const [searchOpen, setSearchOpen] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   useEffect(() => {
     const id = setInterval(() => setTime(new Date()), 1000);
@@ -22,8 +35,8 @@ export function TopBar({ section }: { section: string }) {
 
   return (
     <div
-      className="absolute top-2 sm:top-6 left-2 sm:left-4 z-20 flex items-center gap-2 sm:gap-3 pointer-events-none"
-      style={{ right: rightOpen ? "calc(380px + 1rem)" : "1rem" }}
+      className="absolute top-2 sm:top-6 left-2 sm:left-4 right-2 sm:right-4 z-20 flex items-center gap-2 sm:gap-3 pointer-events-none"
+      style={isDesktop && rightOpen ? { right: "calc(380px + 1rem)" } : undefined}
     >
       {/* mobile hamburger */}
       <button
@@ -34,7 +47,7 @@ export function TopBar({ section }: { section: string }) {
         <Menu className="h-4 w-4" />
       </button>
 
-      <div className="glass-strong rounded-xl px-3 sm:px-4 h-11 flex items-center gap-2 sm:gap-3 pointer-events-auto shrink-0">
+      <div className={`glass-strong rounded-xl px-3 sm:px-4 h-11 flex items-center gap-2 sm:gap-3 pointer-events-auto shrink-0 ${searchOpen ? "hidden sm:flex" : "flex"}`}>
         <span className="h-1.5 w-1.5 rounded-full bg-emerald animate-pulse" />
         <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.15em] text-muted-foreground truncate max-w-[110px] sm:max-w-none">
           {section}
@@ -60,7 +73,7 @@ export function TopBar({ section }: { section: string }) {
             <motion.div
               key="search-input"
               initial={{ width: 44, opacity: 0 }}
-              animate={{ width: "clamp(160px, 30vw, 300px)", opacity: 1 }}
+              animate={{ width: isDesktop ? "clamp(180px, 30vw, 300px)" : "clamp(110px, 20vw, 150px)", opacity: 1 }}
               exit={{ width: 44, opacity: 0 }}
               className="glass-strong rounded-xl h-11 px-3.5 flex items-center gap-2 overflow-hidden"
             >

@@ -1,8 +1,21 @@
 "use client";
 
 import { Flame, AlertTriangle, Navigation, Layers, Maximize2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import type { LayerToggles } from "./MapCanvas";
+
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia(query);
+    setMatches(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setMatches(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, [query]);
+  return matches;
+}
 
 type Props = {
   layers: LayerToggles;
@@ -17,6 +30,8 @@ const items: { key: keyof LayerToggles; label: string; icon: typeof Flame; color
 ];
 
 export function BottomBar({ layers, onToggle, rightOpen = true }: Props) {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -28,7 +43,7 @@ export function BottomBar({ layers, onToggle, rightOpen = true }: Props) {
         right: 0,
         display: "flex",
         justifyContent: "center",
-        paddingRight: rightOpen ? "calc(380px + 1rem)" : "0",
+        paddingRight: isDesktop && rightOpen ? "calc(380px + 1rem)" : "0",
         transition: "padding-right 0.35s ease",
       }}
     >

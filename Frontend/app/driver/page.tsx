@@ -63,12 +63,18 @@ export default function DriverDashboard() {
       {/* main grid */}
       <main className="relative flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-3 p-3 sm:p-4 overflow-hidden">
         {/* left metrics */}
-        <aside className="flex flex-col gap-3 min-h-0 overflow-y-auto scrollbar-thin">
-          <BigMetric icon={<MapPin className="h-5 w-5 text-electric" />} label="Next Stop" value="Pavilion B" sub="0.8 km · 2 min" />
-          <BigMetric icon={<Users className="h-5 w-5 text-emerald" />} label="Assigned Passengers" value="18" sub="of 22 capacity" />
-          <BigMetric icon={<Gauge className="h-5 w-5 text-white" />} label="Optimal Speed" value={`${speed}`} sub="km / h · safe corridor" big />
+        <aside className="flex lg:flex-col gap-3 min-h-0 overflow-x-auto lg:overflow-x-hidden lg:overflow-y-auto scrollbar-thin">
+          <div className="shrink-0 w-[260px] lg:w-auto">
+            <BigMetric icon={<MapPin className="h-5 w-5 text-electric" />} label="Next Stop" value="Pavilion B" sub="0.8 km · 2 min" />
+          </div>
+          <div className="shrink-0 w-[260px] lg:w-auto">
+            <BigMetric icon={<Users className="h-5 w-5 text-emerald" />} label="Assigned Passengers" value="18" sub="of 22 capacity" />
+          </div>
+          <div className="shrink-0 w-[260px] lg:w-auto">
+            <BigMetric icon={<Gauge className="h-5 w-5 text-white" />} label="Optimal Speed" value={`${speed}`} sub="km / h · safe corridor" big />
+          </div>
 
-          <div className="rounded-2xl border border-white/10 bg-[#0d0d0d] p-4">
+          <div className="shrink-0 w-[260px] lg:w-auto rounded-2xl border border-white/10 bg-[#0d0d0d] p-4">
             <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
               <Volume2 className="h-3.5 w-3.5" /> Audio Cues
             </div>
@@ -77,7 +83,7 @@ export default function DriverDashboard() {
         </aside>
 
         {/* canvas */}
-        <section className="relative rounded-2xl border border-white/10 bg-[#0d0d0d] overflow-hidden">
+        <section className="relative rounded-2xl border border-white/10 bg-[#0d0d0d] overflow-hidden min-h-[220px] lg:min-h-0">
           <div className="absolute inset-0 grid-bg opacity-60" />
           <div className="absolute inset-0 radial-fade" />
 
@@ -149,7 +155,7 @@ export default function DriverDashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
-                className="absolute inset-0 z-20 flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm"
+                className="absolute inset-0 z-20 flex items-center justify-center p-4 sm:p-6 bg-black/40 backdrop-blur-sm"
               >
                 <motion.div
                   animate={{ boxShadow: ["0 0 0 0 rgba(239,68,68,0.6)", "0 0 0 16px rgba(239,68,68,0)"] }}
@@ -176,7 +182,7 @@ export default function DriverDashboard() {
                   </div>
                   <button
                     onClick={accept}
-                    className="mt-5 w-full rounded-xl bg-crimson text-white font-semibold py-4 text-base flex items-center justify-center gap-2 hover:opacity-95 active:scale-[0.98] transition"
+                    className="mt-5 w-full rounded-xl bg-crimson text-white font-semibold py-3 sm:py-4 text-sm sm:text-base flex items-center justify-center gap-2 hover:opacity-95 active:scale-[0.98] transition"
                   >
                     Accept New Route <ArrowRight className="h-5 w-5" />
                   </button>
@@ -214,7 +220,7 @@ function BigMetric({ icon, label, value, sub, big }: { icon: React.ReactNode; la
         <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{label}</div>
         <div className="h-9 w-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">{icon}</div>
       </div>
-      <div className={`mt-3 num font-semibold text-white tracking-tight ${big ? "text-6xl" : "text-4xl"}`}>{value}</div>
+      <div className={`mt-3 num font-semibold text-white tracking-tight ${big ? "text-4xl sm:text-5xl lg:text-6xl" : "text-3xl sm:text-4xl"}`}>{value}</div>
       <div className="mt-1.5 text-xs text-muted-foreground">{sub}</div>
     </div>
   );

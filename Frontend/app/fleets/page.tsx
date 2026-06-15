@@ -37,7 +37,7 @@ export default function FleetDashboard() {
   return (
     <div className="fixed inset-0 flex bg-background text-foreground overflow-hidden">
       {/* Desktop sidebar */}
-      <div className="hidden lg:flex h-full">
+      <div className="hidden lg:flex h-full overflow-visible relative">
         <Sidebar active={active} onChange={setActive} onSimulate={() => setModalOpen(true)} />
       </div>
 

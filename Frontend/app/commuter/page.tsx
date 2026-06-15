@@ -53,7 +53,7 @@ export default function CommuterDashboard() {
   };
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#0A0A0A] text-foreground flex flex-col">
+    <div className="relative min-h-screen w-full overflow-x-hidden overflow-y-auto bg-[#0A0A0A] text-foreground flex flex-col">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-40" />
       <div className="pointer-events-none absolute inset-0 radial-fade" />
 
@@ -75,7 +75,7 @@ export default function CommuterDashboard() {
       </header>
 
       {/* phone canvas */}
-      <main className="relative z-10 flex-1 flex items-start justify-center px-4 py-6">
+      <main className="relative z-10 flex-1 flex items-start justify-center px-4 py-4 sm:py-6">
         <div className="w-full max-w-[400px]">
           {/* phone frame */}
           <div className="relative rounded-[2.5rem] bg-[#0a0a0a] border border-white/10 p-2 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]">

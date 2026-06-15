@@ -1,9 +1,23 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { dummyFleets } from "@/lib/dummy-data";
 import { Truck, Settings as SettingsIcon, CalendarClock, Shield, Bell, Globe, AlertTriangle } from "lucide-react";
 import { useAero } from "@/lib/store";
+
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia(query);
+    setMatches(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setMatches(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, [query]);
+  return matches;
+}
+
 
 const statusColor = (s: string) =>
   s === "en-route"
@@ -85,26 +99,30 @@ export function TimelineView() {
       }
     >
       <div className="rounded-xl bg-card border border-[var(--hairline)] overflow-hidden">
-        <div className="grid grid-cols-12 text-[10px] uppercase tracking-[0.15em] text-muted-foreground px-4 py-3 border-b border-[var(--hairline)]">
-          <div className="col-span-2">Time</div>
-          <div className="col-span-5">Phase</div>
-          <div className="col-span-3">Zone</div>
-          <div className="col-span-2 text-right">Volume</div>
+        <div className="overflow-x-auto scrollbar-thin">
+          <div className="min-w-[500px]">
+            <div className="grid grid-cols-12 text-[10px] uppercase tracking-[0.15em] text-muted-foreground px-4 py-3 border-b border-[var(--hairline)]">
+              <div className="col-span-2">Time</div>
+              <div className="col-span-5">Phase</div>
+              <div className="col-span-3">Zone</div>
+              <div className="col-span-2 text-right">Volume</div>
+            </div>
+            {schedule.map((e, i) => (
+              <motion.div
+                key={e.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.05 }}
+                className="grid grid-cols-12 items-center px-4 py-3.5 border-b border-[var(--hairline)] last:border-0 hover:bg-white/[0.02] transition text-sm"
+              >
+                <div className="col-span-2 num text-muted-foreground">{e.endTime}</div>
+                <div className="col-span-5 truncate">{e.name}</div>
+                <div className="col-span-3 text-muted-foreground truncate">{e.zone}</div>
+                <div className="col-span-2 num text-right">{e.volume.toLocaleString()}</div>
+              </motion.div>
+            ))}
+          </div>
         </div>
-        {schedule.map((e, i) => (
-          <motion.div
-            key={e.id}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.05 }}
-            className="grid grid-cols-12 items-center px-4 py-3.5 border-b border-[var(--hairline)] last:border-0 hover:bg-white/[0.02] transition text-sm"
-          >
-            <div className="col-span-2 num text-muted-foreground">{e.endTime}</div>
-            <div className="col-span-5 truncate">{e.name}</div>
-            <div className="col-span-3 text-muted-foreground truncate">{e.zone}</div>
-            <div className="col-span-2 num text-right">{e.volume.toLocaleString()}</div>
-          </motion.div>
-        ))}
       </div>
     </Panel>
   );
@@ -122,16 +140,16 @@ export function SettingsView() {
       <div className="rounded-xl bg-[#141414] border border-white/5 divide-y divide-white/5">
         {rows.map(({ icon: Icon, label, value, on }) => (
           <div key={label} className="flex items-center justify-between p-4">
-            <div className="flex items-center gap-3">
-              <div className="h-9 w-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="h-9 w-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
                 <Icon className="h-4 w-4 text-white/80" />
               </div>
-              <div>
-                <div className="text-sm text-white">{label}</div>
-                <div className="text-[11px] text-muted-foreground mt-0.5">{value}</div>
+              <div className="min-w-0">
+                <div className="text-sm text-white truncate">{label}</div>
+                <div className="text-[11px] text-muted-foreground mt-0.5 truncate">{value}</div>
               </div>
             </div>
-            <div className={`h-5 w-9 rounded-full relative ${on ? "bg-emerald" : "bg-white/10"}`}>
+            <div className={`h-5 w-9 rounded-full relative shrink-0 ${on ? "bg-emerald" : "bg-white/10"}`}>
               <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all ${on ? "left-[18px]" : "left-0.5"}`} />
             </div>
           </div>
@@ -143,13 +161,14 @@ export function SettingsView() {
 
 function Panel({ title, icon, children, action }: { title: string; icon: React.ReactNode; children: React.ReactNode; action?: React.ReactNode }) {
   const rightOpen = useAero((s) => s.rightPanelOpen);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="absolute left-2 sm:left-4 top-16 sm:top-20 bottom-20 z-10 glass-strong rounded-2xl overflow-hidden flex flex-col"
-      style={{ right: rightOpen ? "calc(380px + 1rem)" : "1rem" }}
+      className="absolute left-2 sm:left-4 right-2 sm:right-4 top-16 sm:top-20 bottom-20 z-10 glass-strong rounded-2xl overflow-hidden flex flex-col"
+      style={isDesktop && rightOpen ? { right: "calc(380px + 1rem)" } : undefined}
     >
       <div className="px-5 py-4 border-b border-[var(--hairline)] flex items-center gap-2">
         <div className="h-7 w-7 rounded-md bg-white/5 border border-[var(--hairline)] flex items-center justify-center">{icon}</div>

@@ -60,7 +60,7 @@ export function RightPanel() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 30 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="absolute right-2 sm:right-4 top-2 sm:top-4 bottom-2 sm:bottom-4 w-[calc(100%-1rem)] sm:w-[360px] max-w-[380px] z-30 glass-strong rounded-2xl flex flex-col overflow-hidden"
+            className="absolute right-0 sm:right-4 top-0 sm:top-4 bottom-0 sm:bottom-4 w-full sm:w-[360px] sm:max-w-[380px] z-30 glass-strong sm:rounded-2xl flex flex-col overflow-hidden"
           >
             <div className="px-5 pt-5 pb-4 border-b border-[var(--hairline)] flex items-start gap-2">
               <div className="h-7 w-7 rounded-md bg-white/5 border border-[var(--hairline)] flex items-center justify-center shrink-0">

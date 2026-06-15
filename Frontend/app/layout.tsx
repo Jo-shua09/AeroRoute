@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -13,6 +13,14 @@ const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#00E676", // Matches your emerald color theme
+};
 
 export const metadata: Metadata = {
   // Main SEO information
@@ -72,14 +80,6 @@ export const metadata: Metadata = {
     ],
   },
 
-  // Mobile and App-related metadata
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
-  themeColor: "#00E676", // Matches your emerald color theme
   manifest: "/site.webmanifest", // If you have a PWA manifest
   robots: {
     index: true,

@@ -26,9 +26,9 @@ export function Sidebar({ active, onChange, onSimulate }: Props) {
     <motion.aside
       animate={{ width: collapsed ? 72 : 280 }}
       transition={{ type: "spring", stiffness: 220, damping: 28 }}
-      className="relative z-30 h-full shrink-0 border-r border-[var(--hairline)] bg-[var(--panel-bg-2)] backdrop-blur-xl flex flex-col"
+      className="relative z-30 h-full shrink-0 border-r border-[var(--hairline)] bg-[var(--panel-bg-2)] backdrop-blur-xl flex flex-col overflow-visible"
     >
-      <div className="flex items-center justify-between px-4 h-16 border-b border-[var(--hairline)]">
+      <div className={`flex items-center h-16 border-b border-[var(--hairline)] ${collapsed ? "justify-center" : "px-4"}`}>
         <div className="flex items-center gap-2.5 overflow-hidden">
           <div className="relative h-8 w-8 rounded-md bg-gradient-to-br from-emerald/30 to-electric/20 border border-[var(--hairline)] flex items-center justify-center shrink-0">
             <Radio className="h-4 w-4 text-emerald" />
@@ -40,14 +40,17 @@ export function Sidebar({ active, onChange, onSimulate }: Props) {
             </div>
           )}
         </div>
-        <button
-          onClick={() => setCollapsed((c) => !c)}
-          className="hidden lg:flex h-7 w-7 rounded-md hover:bg-white/5 text-muted-foreground items-center justify-center transition"
-          aria-label="Toggle sidebar"
-        >
-          <ChevronLeft className={`h-4 w-4 transition-transform ${collapsed ? "rotate-180" : ""}`} />
-        </button>
       </div>
+
+      {/* Floating toggle button on the border */}
+      <button
+        onClick={() => setCollapsed((c) => !c)}
+        className="hidden lg:flex absolute z-50 h-7 w-7 rounded-full border border-[var(--hairline-strong)] bg-[var(--panel-bg-2)] text-muted-foreground items-center justify-center shadow-md hover:text-foreground hover:bg-white/5 transition-all pointer-events-auto"
+        style={{ right: "-14px", top: "18px" }}
+        aria-label="Toggle sidebar"
+      >
+        <ChevronLeft className={`h-4 w-4 transition-transform ${collapsed ? "rotate-180" : ""}`} />
+      </button>
 
       <nav className="px-3 py-4 space-y-1">
         {items.map((item) => {
@@ -135,7 +138,7 @@ export function Sidebar({ active, onChange, onSimulate }: Props) {
         ) : (
           <button
             onClick={onSimulate}
-            className="group w-full rounded-lg bg-primary text-primary-foreground px-3.5 py-2.5 text-sm font-medium hover:opacity-90 transition flex items-center justify-between"
+            className="group w-full rounded-lg bg-primary text-primary-foreground px-3.5 py-2.5 text-sm font-medium hover:opacity-90 transition flex items-center justify-between overflow-hidden"
           >
             <span className="flex items-center gap-2">
               <Smartphone className="h-4 w-4" />
