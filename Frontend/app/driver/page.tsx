@@ -39,9 +39,9 @@ export default function DriverDashboard() {
   };
 
   return (
-    <div className="fixed inset-0 flex flex-col bg-[#0A0A0A] text-foreground overflow-hidden">
+    <div className="relative lg:fixed lg:inset-0 flex flex-col bg-[#0A0A0A] text-foreground min-h-screen lg:min-h-0 overflow-y-auto lg:overflow-hidden">
       {/* top bar */}
-      <header className="relative z-30 flex items-center justify-between px-4 sm:px-6 py-3 border-b border-white/5 bg-[#0d0d0d]/80 backdrop-blur-xl">
+      <header className="relative z-30 flex items-center justify-between px-4 sm:px-6 py-3 border-b border-white/5 bg-[#0d0d0d]/80 backdrop-blur-xl shrink-0">
         <div className="flex items-center gap-2.5">
           <div className="h-8 w-8 rounded-md bg-gradient-to-br from-emerald/30 to-electric/20 border border-white/10 flex items-center justify-center">
             <Radio className="h-4 w-4 text-emerald" />
@@ -61,9 +61,9 @@ export default function DriverDashboard() {
       </header>
 
       {/* main grid */}
-      <main className="relative flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-3 p-3 sm:p-4 overflow-hidden">
+      <main className="relative flex-1 flex flex-col lg:grid lg:grid-cols-[340px_1fr] gap-3 p-3 sm:p-4 overflow-visible lg:overflow-hidden lg:min-h-0">
         {/* left metrics */}
-        <aside className="flex lg:flex-col gap-3 min-h-0 overflow-x-auto lg:overflow-x-hidden lg:overflow-y-auto scrollbar-thin">
+        <aside className="flex lg:flex-col gap-3 min-h-0 overflow-x-auto lg:overflow-x-hidden lg:overflow-y-auto scrollbar-thin shrink-0">
           <div className="shrink-0 w-[260px] lg:w-auto">
             <BigMetric icon={<MapPin className="h-5 w-5 text-electric" />} label="Next Stop" value="Pavilion B" sub="0.8 km · 2 min" />
           </div>
@@ -74,7 +74,7 @@ export default function DriverDashboard() {
             <BigMetric icon={<Gauge className="h-5 w-5 text-white" />} label="Optimal Speed" value={`${speed}`} sub="km / h · safe corridor" big />
           </div>
 
-          <div className="shrink-0 w-[260px] lg:w-auto rounded-2xl border border-white/10 bg-[#0d0d0d] p-4">
+          <div className="shrink-0 w-[260px] lg:w-auto rounded-2xl border border-white/10 bg-[#0d0d0d] p-4 flex flex-col justify-between">
             <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
               <Volume2 className="h-3.5 w-3.5" /> Audio Cues
             </div>
@@ -83,7 +83,7 @@ export default function DriverDashboard() {
         </aside>
 
         {/* canvas */}
-        <section className="relative rounded-2xl border border-white/10 bg-[#0d0d0d] overflow-hidden min-h-[220px] lg:min-h-0">
+        <section className="relative rounded-2xl border border-white/10 bg-[#0d0d0d] overflow-hidden h-[360px] sm:h-[480px] lg:h-auto lg:min-h-0 shrink-0">
           <div className="absolute inset-0 grid-bg opacity-60" />
           <div className="absolute inset-0 radial-fade" />
 
@@ -215,13 +215,13 @@ export default function DriverDashboard() {
 
 function BigMetric({ icon, label, value, sub, big }: { icon: React.ReactNode; label: string; value: string; sub: string; big?: boolean }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#0d0d0d] p-5">
-      <div className="flex items-center justify-between">
-        <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{label}</div>
-        <div className="h-9 w-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">{icon}</div>
+    <div className="rounded-2xl border border-white/10 bg-[#0d0d0d] p-3 sm:p-5 min-w-0 overflow-hidden">
+      <div className="flex items-center justify-between gap-2">
+        <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.18em] text-muted-foreground truncate">{label}</div>
+        <div className="h-7 w-7 sm:h-9 sm:w-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">{icon}</div>
       </div>
-      <div className={`mt-3 num font-semibold text-white tracking-tight ${big ? "text-4xl sm:text-5xl lg:text-6xl" : "text-3xl sm:text-4xl"}`}>{value}</div>
-      <div className="mt-1.5 text-xs text-muted-foreground">{sub}</div>
+      <div className={`mt-2 sm:mt-3 num font-semibold text-white tracking-tight ${big ? "text-2xl sm:text-4xl lg:text-6xl" : "text-xl sm:text-3xl lg:text-4xl"}`}>{value}</div>
+      <div className="mt-1 sm:mt-1.5 text-[10px] sm:text-xs text-muted-foreground truncate">{sub}</div>
     </div>
   );
 }

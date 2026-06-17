@@ -69,7 +69,7 @@ export default function CommuterDashboard() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <ThemeToggle />
+          <ThemeToggle className="!h-11 !w-11" />
           <RoleSwitcher />
         </div>
       </header>

@@ -82,11 +82,11 @@ export default function Landing() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-10 flex items-center justify-center gap-3"
+          className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 px-4 sm:px-0"
         >
           <Link // Changed 'to' to 'href'
             href="/select-role"
-            className="group relative inline-flex items-center gap-2 rounded-xl bg-electric px-5 py-3.5 text-sm font-medium text-white shadow-[0_0_40px_-8px_var(--electric)] hover:shadow-[0_0_60px_-6px_var(--electric)] transition-all"
+            className="group relative inline-flex items-center justify-center text-center gap-2 rounded-xl bg-electric px-4 sm:px-5 py-3 sm:py-3.5 text-xs sm:text-sm font-medium text-white shadow-[0_0_40px_-8px_var(--electric)] hover:shadow-[0_0_60px_-6px_var(--electric)] transition-all w-full sm:w-auto shrink-0"
           >
             <span className="absolute inset-0 rounded-xl bg-gradient-to-b from-white/15 to-transparent pointer-events-none" />
             Launch Orchestration Engine
@@ -94,7 +94,7 @@ export default function Landing() {
           </Link>
           <a
             href="#platform"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.02] px-5 py-3.5 text-sm text-muted-foreground hover:text-white hover:bg-white/[0.04] transition"
+            className="inline-flex items-center justify-center text-center gap-2 rounded-xl border border-white/10 bg-white/[0.02] px-4 sm:px-5 py-3 sm:py-3.5 text-xs sm:text-sm text-muted-foreground hover:text-white hover:bg-white/[0.04] transition w-full sm:w-auto"
           >
             How it works
           </a>
@@ -243,10 +243,10 @@ export default function Landing() {
               <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
                 Pick a profile and explore a fully reactive simulation — three isolated dashboards, shared dummy telemetry, zero setup.
               </p>
-              <div className="mt-6 flex flex-wrap gap-2.5">
+              <div className="mt-6 flex flex-wrap gap-2.5 w-full">
                 <Link // Changed 'to' to 'href'
                   href="/select-role"
-                  className="inline-flex items-center gap-2 rounded-xl bg-electric px-5 py-3 text-sm font-medium text-white shadow-[0_0_40px_-10px_var(--electric)] hover:shadow-[0_0_60px_-6px_var(--electric)] transition"
+                  className="inline-flex items-center justify-center text-center gap-2 rounded-xl bg-electric px-4 sm:px-5 py-2.5 sm:py-3 text-xs sm:text-sm font-medium text-white shadow-[0_0_40px_-10px_var(--electric)] hover:shadow-[0_0_60px_-6px_var(--electric)] transition w-full sm:w-auto"
                 >
                   Launch Orchestration Engine <ArrowRight className="h-4 w-4" />
                 </Link>
@@ -263,7 +263,7 @@ export default function Landing() {
               ].map((c, i) => (
                 <div
                   key={i}
-                  className="aspect-square rounded-xl bg-white/[0.02] border border-white/5 p-3 flex flex-col justify-between hover:border-white/10 transition"
+                  className="aspect-auto sm:aspect-square min-h-[80px] sm:min-h-0 rounded-xl bg-white/[0.02] border border-white/5 p-2 sm:p-3 flex flex-col justify-between hover:border-white/10 transition"
                 >
                   <div className="h-7 w-7 rounded-md bg-white/5 border border-white/10 flex items-center justify-center">{c.i}</div>
                   <div className="text-[11px] text-muted-foreground">{c.l}</div>
