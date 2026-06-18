@@ -12,7 +12,7 @@ export default function DriverDashboard() {
   const [speed, setSpeed] = useState(24);
   const [occupancy, setOccupancy] = useState(12);
   const maxOccupancy = 14;
-  
+
   const [hazardActive, setHazardActive] = useState(false);
   const [routeState, setRouteState] = useState<"normal" | "detour">("normal");
   const [showToast, setShowToast] = useState(false);
@@ -51,243 +51,234 @@ export default function DriverDashboard() {
 
   return (
     <>
-      <AnimatePresence>
-        {isLoading && <AeroLoader onComplete={() => setIsLoading(false)} />}
-      </AnimatePresence>
-    <div className="fixed inset-0 bg-[#0A0A0A] text-white overflow-hidden flex flex-col font-sans select-none">
-      
-      <main className="flex-1 w-full h-full p-4 flex flex-col lg:flex-row gap-4">
-        {/* THE ACTIVE ROUTE VECTOR CANVAS (Left 65%) */}
-        <section className="relative w-full lg:w-[65%] h-[50vh] lg:h-full bg-[#121212] rounded-3xl border border-white/5 overflow-hidden flex flex-col justify-center items-center">
-          {/* Grid Background */}
-          <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+      <AnimatePresence>{isLoading && <AeroLoader onComplete={() => setIsLoading(false)} />}</AnimatePresence>
+      <div className="fixed inset-0 bg-[#0A0A0A] text-white overflow-hidden flex flex-col font-sans select-none">
+        <main className="flex-1 w-full h-full p-4 flex flex-col lg:flex-row gap-4">
+          {/* THE ACTIVE ROUTE VECTOR CANVAS (Left 65%) */}
+          <section className="relative w-full lg:w-[65%] h-[50vh] lg:h-full bg-[#121212] rounded-3xl border border-white/5 overflow-hidden flex flex-col justify-center items-center">
+            {/* Grid Background */}
+            <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]"></div>
 
-          {/* Route Path */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="route-glow" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#00D1FF" stopOpacity="0.2" />
-                <stop offset="100%" stopColor="#00D1FF" stopOpacity="1" />
-              </linearGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
+            {/* Route Path */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="route-glow" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#00D1FF" stopOpacity="0.2" />
+                  <stop offset="100%" stopColor="#00D1FF" stopOpacity="1" />
+                </linearGradient>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                  <feMerge>
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
 
-            <AnimatePresence mode="wait">
-              {routeState === "normal" ? (
-                <motion.path
-                  key="normal-route"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 1 }}
-                  d="M 10 90 L 90 10"
-                  stroke="url(#route-glow)"
-                  strokeWidth="8"
-                  strokeLinecap="round"
-                  fill="none"
-                  filter="url(#glow)"
-                />
-              ) : (
-                <motion.path
-                  key="detour-route"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 1 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                  d="M 10 90 L 40 60 L 60 70 L 90 10"
-                  stroke="url(#route-glow)"
-                  strokeWidth="8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  fill="none"
-                  filter="url(#glow)"
-                />
-              )}
-            </AnimatePresence>
-          </svg>
+              <AnimatePresence mode="wait">
+                {routeState === "normal" ? (
+                  <motion.path
+                    key="normal-route"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    animate={{ pathLength: 1, opacity: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 1 }}
+                    d="M 10 90 L 90 10"
+                    stroke="url(#route-glow)"
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                    fill="none"
+                    filter="url(#glow)"
+                  />
+                ) : (
+                  <motion.path
+                    key="detour-route"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    animate={{ pathLength: 1, opacity: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    d="M 10 90 L 40 60 L 60 70 L 90 10"
+                    stroke="url(#route-glow)"
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                    filter="url(#glow)"
+                  />
+                )}
+              </AnimatePresence>
+            </svg>
 
-          {/* Shuttle Location Marker */}
-          <motion.div 
-            className="absolute z-10 flex items-center justify-center h-16 w-16 bg-[#0A0A0A] border-4 border-[#00D1FF] rounded-full shadow-[0_0_24px_#00D1FF]"
-            animate={
-              routeState === "normal" 
-                ? { left: "45%", top: "55%" } 
-                : { left: "55%", top: "65%" }
-            }
-            transition={{ type: "spring", stiffness: 50, damping: 15 }}
-            style={{ x: "-50%", y: "-50%" }}
-          >
-            <Navigation className="h-8 w-8 text-[#00D1FF]" strokeWidth={3} style={{ transform: "rotate(45deg) translate(-2px, 2px)" }} />
-          </motion.div>
-
-          {/* Top Left Speed Indicator */}
-          <div className="absolute top-6 left-6 bg-[#18181B]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-6 shadow-2xl">
-            <div className="text-xs tracking-[0.2em] text-zinc-400 uppercase font-semibold mb-1">Current Speed</div>
-            <div className="text-4xl sm:text-6xl font-bold tracking-tighter" style={{ fontFamily: "impact, sans-serif" }}>
-              {speed} <span className="text-2xl sm:text-3xl text-zinc-500">km/h</span>
-            </div>
-          </div>
-
-          {/* Top Right Master Action Button */}
-          <div className="absolute top-6 right-6 z-40">
-            <button 
-              onClick={() => {
-                if(routeState === "normal") setHazardActive(true);
-              }}
-              disabled={hazardActive || routeState === "detour"}
-              className="bg-[#18181B]/80 hover:bg-[#27272A] disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-xl border border-white/10 rounded-xl px-4 py-3 flex items-center gap-2 transition-colors min-h-[64px]"
+            {/* Shuttle Location Marker */}
+            <motion.div
+              className="absolute z-10 flex items-center justify-center h-16 w-16 bg-[#0A0A0A] border-4 border-[#00D1FF] rounded-full shadow-[0_0_24px_#00D1FF]"
+              animate={routeState === "normal" ? { left: "45%", top: "55%" } : { left: "55%", top: "65%" }}
+              transition={{ type: "spring", stiffness: 50, damping: 15 }}
+              style={{ x: "-50%", y: "-50%" }}
             >
-              <AlertTriangle className="h-5 w-5 text-amber-500" />
-              <span className="font-semibold text-sm tracking-wide">Simulate Live Hazard</span>
-            </button>
-          </div>
+              <Navigation className="h-8 w-8 text-[#00D1FF]" strokeWidth={3} style={{ transform: "rotate(45deg) translate(-2px, 2px)" }} />
+            </motion.div>
 
-        </section>
-
-        {/* THE TELEMETRY CONTROL HUD (Right 35%) */}
-        <aside className="w-full lg:w-[35%] h-[50vh] lg:h-full flex flex-col gap-4">
-          
-          {/* BRAND HEADER & ROLE SWITCHER */}
-          <div className="shrink-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-4 sm:px-6 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <AeroLogo className="h-12 w-12" />
-              <div className="flex flex-col">
-                <span className="text-xl font-black tracking-widest text-white leading-none uppercase">AeroRoute</span>
-                <span className="text-[10px] text-[#00D1FF] uppercase tracking-[0.2em] mt-1 font-semibold">Pilot Telemetry</span>
+            {/* Top Left Speed Indicator */}
+            <div className="absolute top-6 left-6 bg-[#18181B]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-6 shadow-2xl">
+              <div className="text-xs tracking-[0.2em] text-zinc-400 uppercase font-semibold mb-1">Current Speed</div>
+              <div className="text-4xl sm:text-6xl font-bold tracking-tighter" style={{ fontFamily: "impact, sans-serif" }}>
+                {speed} <span className="text-2xl sm:text-3xl text-zinc-500">km/h</span>
               </div>
             </div>
-            <RoleSwitcher />
-          </div>
 
-          {/* CARD A: THE NEXT MILESTONE BLOCK */}
-          <div className="flex-1 min-h-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 sm:p-8 flex flex-col justify-center">
-            <div className="flex items-start gap-6">
-              <div className="flex-shrink-0 bg-white/5 p-4 rounded-3xl">
-                <MilestoneIcon className="h-16 w-16 text-[#00D1FF]" strokeWidth={2.5} />
-              </div>
-              <div className="flex flex-col">
-                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight uppercase" style={{ fontFamily: "impact, sans-serif" }}>
-                  {milestoneInstruction}
-                </div>
-                <div className="text-6xl sm:text-7xl font-black text-white mt-2 drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] tracking-tighter" style={{ fontFamily: "impact, sans-serif" }}>
-                  {milestoneDistance}
-                </div>
-                <div className="text-lg text-zinc-400 mt-2 font-medium tracking-wide">
-                  {milestoneSub}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* CARD B: DYNAMIC PASSENGER METRIC */}
-          <div className="flex-1 min-h-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 sm:p-8 flex flex-col justify-center relative overflow-hidden transition-colors duration-500">
-            {isSaturated && <div className="absolute inset-0 bg-amber-500/10 pointer-events-none" />}
-            
-            <div className="text-center w-full relative z-10">
-              <div className={`text-xs tracking-[0.25em] uppercase font-bold mb-4 ${isSaturated ? "text-amber-500" : "text-zinc-400"}`}>
-                {isSaturated ? "FULLY SATURATED" : "PASSENGER OCCUPANCY"}
-              </div>
-              
-              <div className="flex items-center justify-between gap-4">
-                <button 
-                  onClick={handleDecrement}
-                  className="flex-shrink-0 h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-[#EF4444] text-white flex items-center justify-center hover:bg-[#DC2626] active:scale-95 transition-all shadow-lg"
-                >
-                  <Minus className="h-10 w-10" strokeWidth={3} />
-                </button>
-
-                <div className={`text-6xl sm:text-7xl lg:text-8xl font-black tracking-tighter ${isSaturated ? "text-amber-500 drop-shadow-[0_0_16px_rgba(245,158,11,0.6)]" : "text-white"}`} style={{ fontFamily: "impact, sans-serif" }}>
-                  {occupancy} <span className="text-3xl sm:text-4xl lg:text-5xl text-zinc-600">/ {maxOccupancy}</span>
-                </div>
-
-                <button 
-                  onClick={handleIncrement}
-                  className="flex-shrink-0 h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-[#10B981] text-white flex items-center justify-center hover:bg-[#059669] active:scale-95 transition-all shadow-lg"
-                >
-                  <Plus className="h-10 w-10" strokeWidth={3} />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* CARD C: NAVIGATION TARGET DESTINATION */}
-          <div className="h-32 shrink-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 sm:px-8 flex flex-col justify-center">
-            <div className="text-xs tracking-[0.2em] text-zinc-400 uppercase font-semibold mb-2">
-              ACTIVE ASSIGNED PULSE TARGET
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="text-xl sm:text-2xl font-bold tracking-tight text-white truncate">
-                Main Pavilion - Exit Gate B
-              </div>
-              <div className="flex items-center gap-3 shrink-0 ml-4 bg-white/5 rounded-full px-4 py-2">
-                <span className="relative flex h-4 w-4">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-4 w-4 bg-[#10B981]"></span>
-                </span>
-                <span className="text-sm font-semibold tracking-wider text-[#10B981]">SYNCED</span>
-              </div>
-            </div>
-          </div>
-
-        </aside>
-      </main>
-
-      {/* CRIMSON DETOUR TAKEOVER BANNER */}
-      <AnimatePresence>
-        {hazardActive && (
-          <motion.div
-            initial={{ y: "-100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "-100%" }}
-            transition={{ type: "spring", damping: 20, stiffness: 100 }}
-            className="absolute top-0 left-0 right-0 z-50 bg-[#EF4444] shadow-2xl p-8 sm:p-12 flex flex-col justify-center"
-            style={{ minHeight: "50vh" }}
-          >
-            <div className="max-w-5xl mx-auto w-full flex flex-col gap-8">
-              <div className="flex items-center gap-6">
-                <AlertTriangle className="h-16 w-16 text-white" strokeWidth={3} />
-                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tighter uppercase leading-none" style={{ fontFamily: "impact, sans-serif" }}>
-                  HAZARD EN ROUTE:<br />
-                  200m Flood Ahead at Estate Road 4
-                </h2>
-              </div>
-              
-              <p className="text-2xl sm:text-3xl font-semibold text-white/90">
-                Pre-Calculated Detour Ready. Immediate action required.
-              </p>
-
+            {/* Top Right Master Action Button */}
+            <div className="absolute top-6 right-6 z-40">
               <button
-                onClick={acceptDetour}
-                className="mt-4 w-full sm:w-auto self-start bg-[#10B981] hover:bg-[#059669] text-white text-2xl sm:text-3xl font-bold uppercase tracking-wide rounded-2xl px-12 py-8 flex items-center justify-center shadow-[0_0_32px_rgba(16,185,129,0.6)] active:scale-95 transition-all min-h-[80px]"
+                onClick={() => {
+                  if (routeState === "normal") setHazardActive(true);
+                }}
+                disabled={hazardActive || routeState === "detour"}
+                className="bg-[#18181B]/80 hover:bg-[#27272A] disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-xl border border-white/10 rounded-xl px-4 py-3 flex items-center gap-2 transition-colors min-h-[64px]"
               >
-                [ ACCEPT DETOUR ROUTE ]
+                <AlertTriangle className="h-5 w-5 text-amber-500" />
+                <span className="font-semibold text-sm tracking-wide">Simulate Live Hazard</span>
               </button>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </section>
 
-      {/* TOAST NOTIFICATION */}
-      <AnimatePresence>
-        {showToast && (
-          <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 bg-[#10B981] text-white px-8 py-4 rounded-full font-semibold tracking-wide text-lg shadow-2xl flex items-center gap-3"
-          >
-            <Activity className="h-6 w-6" />
-            Route updated successfully via SignalR telemetry
-          </motion.div>
-        )}
-      </AnimatePresence>
+          {/* THE TELEMETRY CONTROL HUD (Right 35%) */}
+          <aside className="w-full lg:w-[35%] h-[50vh] lg:h-full flex flex-col gap-4">
+            {/* BRAND HEADER & ROLE SWITCHER */}
+            <div className="shrink-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-4 sm:px-6 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <AeroLogo className="h-12 w-12" />
+                <div className="flex flex-col">
+                  <span className="text-xl font-black tracking-widest text-white leading-none uppercase">AeroRoute</span>
+                  <span className="text-[10px] text-[#00D1FF] uppercase tracking-[0.2em] mt-1 font-semibold">Pilot Telemetry</span>
+                </div>
+              </div>
+              <RoleSwitcher />
+            </div>
 
-    </div>
+            {/* CARD A: THE NEXT MILESTONE BLOCK */}
+            <div className="flex-1 min-h-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 sm:p-8 flex flex-col justify-center">
+              <div className="flex items-start gap-6">
+                <div className="flex-shrink-0 bg-white/5 p-4 rounded-3xl">
+                  <MilestoneIcon className="h-16 w-16 text-[#00D1FF]" strokeWidth={2.5} />
+                </div>
+                <div className="flex flex-col">
+                  <div className="text-4xl sm:text-5xl font-extrabold tracking-tight uppercase" style={{ fontFamily: "impact, sans-serif" }}>
+                    {milestoneInstruction}
+                  </div>
+                  <div
+                    className="text-6xl sm:text-7xl font-black text-white mt-2 drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] tracking-tighter"
+                    style={{ fontFamily: "impact, sans-serif" }}
+                  >
+                    {milestoneDistance}
+                  </div>
+                  <div className="text-lg text-zinc-400 mt-2 font-medium tracking-wide">{milestoneSub}</div>
+                </div>
+              </div>
+            </div>
+
+            {/* CARD B: DYNAMIC PASSENGER METRIC */}
+            <div className="flex-1 min-h-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 sm:p-8 flex flex-col justify-center relative overflow-hidden transition-colors duration-500">
+              {isSaturated && <div className="absolute inset-0 bg-amber-500/10 pointer-events-none" />}
+
+              <div className="text-center w-full relative z-10">
+                <div className={`text-xs tracking-[0.25em] uppercase font-bold mb-4 ${isSaturated ? "text-amber-500" : "text-zinc-400"}`}>
+                  {isSaturated ? "FULLY SATURATED" : "PASSENGER OCCUPANCY"}
+                </div>
+
+                <div className="flex items-center justify-between gap-4">
+                  <button
+                    onClick={handleDecrement}
+                    className="flex-shrink-0 h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-[#EF4444] text-white flex items-center justify-center hover:bg-[#DC2626] active:scale-95 transition-all shadow-lg"
+                  >
+                    <Minus className="h-10 w-10" strokeWidth={3} />
+                  </button>
+
+                  <div
+                    className={`text-6xl sm:text-7xl lg:text-8xl font-black tracking-tighter ${isSaturated ? "text-amber-500 drop-shadow-[0_0_16px_rgba(245,158,11,0.6)]" : "text-white"}`}
+                    style={{ fontFamily: "impact, sans-serif" }}
+                  >
+                    {occupancy} <span className="text-3xl sm:text-4xl lg:text-5xl text-zinc-600">/ {maxOccupancy}</span>
+                  </div>
+
+                  <button
+                    onClick={handleIncrement}
+                    className="flex-shrink-0 h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-[#10B981] text-white flex items-center justify-center hover:bg-[#059669] active:scale-95 transition-all shadow-lg"
+                  >
+                    <Plus className="h-10 w-10" strokeWidth={3} />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* CARD C: NAVIGATION TARGET DESTINATION */}
+            <div className="h-32 shrink-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 sm:px-8 flex flex-col justify-center">
+              <div className="text-xs tracking-[0.2em] text-zinc-400 uppercase font-semibold mb-2">ACTIVE ASSIGNED PULSE TARGET</div>
+              <div className="flex items-center justify-between">
+                <div className="text-xl sm:text-2xl font-bold tracking-tight text-white truncate">Main Pavilion - Exit Gate B</div>
+                <div className="flex items-center gap-3 shrink-0 ml-4 bg-white/5 rounded-full px-4 py-2">
+                  <span className="relative flex h-4 w-4">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-4 w-4 bg-[#10B981]"></span>
+                  </span>
+                  <span className="text-sm font-semibold tracking-wider text-[#10B981]">SYNCED</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </main>
+
+        {/* CRIMSON DETOUR TAKEOVER BANNER */}
+        <AnimatePresence>
+          {hazardActive && (
+            <motion.div
+              initial={{ y: "-100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-100%" }}
+              transition={{ type: "spring", damping: 20, stiffness: 100 }}
+              className="absolute top-0 left-0 right-0 z-50 bg-[#EF4444] shadow-2xl p-8 sm:p-12 flex flex-col justify-center"
+              style={{ minHeight: "50vh" }}
+            >
+              <div className="max-w-5xl mx-auto w-full flex flex-col gap-8">
+                <div className="flex items-center gap-6">
+                  <AlertTriangle className="h-16 w-16 text-white" strokeWidth={3} />
+                  <h2
+                    className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tighter uppercase leading-none"
+                    style={{ fontFamily: "impact, sans-serif" }}
+                  >
+                    HAZARD EN ROUTE:
+                    <br />
+                    200m Flood Ahead at Estate Road 4
+                  </h2>
+                </div>
+
+                <p className="text-2xl sm:text-3xl font-semibold text-white/90">Pre-Calculated Detour Ready. Immediate action required.</p>
+
+                <button
+                  onClick={acceptDetour}
+                  className="mt-4 w-full sm:w-auto self-start bg-[#10B981] hover:bg-[#059669] text-white text-2xl sm:text-3xl font-bold uppercase tracking-wide rounded-2xl px-12 py-8 flex items-center justify-center shadow-[0_0_32px_rgba(16,185,129,0.6)] active:scale-95 transition-all min-h-[80px]"
+                >
+                  [ ACCEPT DETOUR ROUTE ]
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* TOAST NOTIFICATION */}
+        <AnimatePresence>
+          {showToast && (
+            <motion.div
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.9 }}
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 bg-[#10B981] text-white px-8 py-4 rounded-full font-semibold tracking-wide text-lg shadow-2xl flex items-center gap-3"
+            >
+              <Activity className="h-6 w-6" />
+              Route updated successfully via SignalR telemetry
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </>
   );
 }

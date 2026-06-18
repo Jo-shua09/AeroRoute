@@ -130,8 +130,8 @@ export default function SelectRole() {
             transition={{ delay: 0.5 }}
             className="mt-14 text-center text-[11px] text-muted-foreground"
           >
-            Selecting a profile locks navigation to that perspective. You can switch any time via the "Change Role" affordance in the dashboard
-            header.
+            Selecting a profile locks navigation to that perspective. You can switch any time via the &apos;Change Role&apso; affordance in the
+            dashboard header.
           </motion.div>
         </main>
       </div>

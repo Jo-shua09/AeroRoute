@@ -3,6 +3,7 @@
 import Link from "next/link"; // Use Next.js Link for navigation
 import { Radio, ArrowRight, Activity, Smartphone, Truck, Shield, Zap, WifiOff, TrendingUp, MapPin, Mic } from "lucide-react";
 import { motion } from "motion/react"; // Moved below other imports for consistency, though not strictly required
+import { AeroLogo } from "@/components/aero/AeroLogo";
 
 export default function Landing() {
   return (
@@ -16,9 +17,7 @@ export default function Landing() {
       {/* header */}
       <header className="relative z-20 mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="relative h-8 w-8 rounded-md bg-gradient-to-br from-emerald/30 to-electric/20 border border-white/10 flex items-center justify-center">
-            <Radio className="h-4 w-4 text-emerald" />
-          </div>
+          <AeroLogo className="h-8 w-8" showBackground={true} />
           <div className="flex flex-col leading-none">
             <span className="text-[15px] font-semibold tracking-tight font-heading">AeroRoute</span>
             <span className="text-[9px] text-muted-foreground tracking-[0.18em] uppercase mt-0.5">Orchestration OS</span>
@@ -276,7 +275,7 @@ export default function Landing() {
 
       <footer className="relative z-10 mx-auto max-w-7xl px-6 py-10 border-t border-white/5 flex flex-col sm:flex-row gap-4 items-center justify-between">
         <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
-          <Radio className="h-3.5 w-3.5 text-emerald" />
+          <AeroLogo className="h-4 w-4" showBackground={false} />
           <span className="font-heading font-medium">AeroRoute</span> · Orchestration OS
         </div>
         <div className="text-[10px] text-muted-foreground tracking-wider uppercase">© 2026 · Built for mega-gatherings</div>
