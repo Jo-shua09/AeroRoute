@@ -47,7 +47,7 @@ export function TopBar({ section }: { section: string }) {
         <Menu className="h-4 w-4" />
       </button>
 
-      <div className={`glass-strong rounded-xl px-3 sm:px-4 h-11 flex items-center gap-2 sm:gap-3 pointer-events-auto shrink-0 ${searchOpen ? "hidden sm:flex" : "flex"}`}>
+      <div className="glass-strong rounded-xl px-3 sm:px-4 h-11 hidden sm:flex items-center gap-2 sm:gap-3 pointer-events-auto shrink-0">
         <span className="h-1.5 w-1.5 rounded-full bg-emerald animate-pulse" />
         <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.15em] text-muted-foreground truncate max-w-[110px] sm:max-w-none">
           {section}
