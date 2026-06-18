@@ -50,7 +50,6 @@ export default function DriverDashboard() {
   const MilestoneIcon = routeState === "normal" ? ArrowLeft : ArrowUp;
 
   return (
-<<<<<<< HEAD
     <>
       <AnimatePresence>{isLoading && <AeroLoader onComplete={() => setIsLoading(false)} />}</AnimatePresence>
       <div className="fixed inset-0 bg-[#0A0A0A] text-white overflow-hidden flex flex-col font-sans select-none">
@@ -125,49 +124,8 @@ export default function DriverDashboard() {
               <div className="text-4xl sm:text-6xl font-bold tracking-tighter" style={{ fontFamily: "impact, sans-serif" }}>
                 {speed} <span className="text-2xl sm:text-3xl text-zinc-500">km/h</span>
               </div>
-=======
-    <div className="relative lg:fixed lg:inset-0 flex flex-col bg-[#0A0A0A] text-foreground min-h-screen lg:min-h-0 overflow-y-auto lg:overflow-hidden">
-      {/* top bar */}
-      <header className="relative z-30 flex items-center justify-between px-4 sm:px-6 py-3 border-b border-white/5 bg-[#0d0d0d]/80 backdrop-blur-xl shrink-0">
-        <div className="flex items-center gap-2.5">
-          <div className="h-8 w-8 rounded-md bg-gradient-to-br from-emerald/30 to-electric/20 border border-white/10 flex items-center justify-center">
-            <Radio className="h-4 w-4 text-emerald" />
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className="text-[14px] font-semibold tracking-tight">AR-12 · Pilot</span>
-            <span className="text-[9px] text-muted-foreground tracking-[0.18em] uppercase mt-0.5">In-vehicle telemetry</span>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="hidden sm:flex items-center gap-2 glass-strong rounded-xl h-11 px-3.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald animate-pulse" />
-            <span className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">On Route</span>
-          </div>
-          <RoleSwitcher />
-        </div>
-      </header>
-
-      {/* main grid */}
-      <main className="relative flex-1 flex flex-col lg:grid lg:grid-cols-[340px_1fr] gap-3 p-3 sm:p-4 overflow-visible lg:overflow-hidden lg:min-h-0">
-        {/* left metrics */}
-        <aside className="flex lg:flex-col gap-3 min-h-0 overflow-x-auto lg:overflow-x-hidden lg:overflow-y-auto scrollbar-thin shrink-0">
-          <div className="shrink-0 w-[260px] lg:w-auto">
-            <BigMetric icon={<MapPin className="h-5 w-5 text-electric" />} label="Next Stop" value="Pavilion B" sub="0.8 km · 2 min" />
-          </div>
-          <div className="shrink-0 w-[260px] lg:w-auto">
-            <BigMetric icon={<Users className="h-5 w-5 text-emerald" />} label="Assigned Passengers" value="18" sub="of 22 capacity" />
-          </div>
-          <div className="shrink-0 w-[260px] lg:w-auto">
-            <BigMetric icon={<Gauge className="h-5 w-5 text-white" />} label="Optimal Speed" value={`${speed}`} sub="km / h · safe corridor" big />
-          </div>
-
-          <div className="shrink-0 w-[260px] lg:w-auto rounded-2xl border border-white/10 bg-[#0d0d0d] p-4 flex flex-col justify-between">
-            <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              <Volume2 className="h-3.5 w-3.5" /> Audio Cues
->>>>>>> 49ac6eba1c7f3d836480ccfaff324773e110f325
             </div>
 
-<<<<<<< HEAD
             {/* Top Right Master Action Button */}
             <div className="absolute top-6 right-6 z-40">
               <button
@@ -176,82 +134,6 @@ export default function DriverDashboard() {
                 }}
                 disabled={hazardActive || routeState === "detour"}
                 className="bg-[#18181B]/80 hover:bg-[#27272A] disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-xl border border-white/10 rounded-xl px-4 py-3 flex items-center gap-2 transition-colors min-h-[64px]"
-=======
-        {/* canvas */}
-        <section className="relative rounded-2xl border border-white/10 bg-[#0d0d0d] overflow-hidden h-[360px] sm:h-[480px] lg:h-auto lg:min-h-0 shrink-0">
-          <div className="absolute inset-0 grid-bg opacity-60" />
-          <div className="absolute inset-0 radial-fade" />
-
-          {/* route line svg */}
-          <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="route" x1="0" x2="1" y1="0" y2="1">
-                <stop offset="0%" stopColor="rgba(59,130,246,0.2)" />
-                <stop offset="100%" stopColor="rgba(59,130,246,0.9)" />
-              </linearGradient>
-            </defs>
-            <path d="M 12 82 Q 30 70 38 58 T 58 38 T 86 18" stroke="url(#route)" strokeWidth="0.6" fill="none" strokeLinecap="round" />
-            <path d="M 12 82 Q 30 70 38 58 T 58 38 T 86 18" stroke="rgba(59,130,246,0.9)" strokeWidth="0.3" strokeDasharray="1 1.5" fill="none" />
-          </svg>
-
-          {/* start marker */}
-          <div className="absolute" style={{ left: "12%", top: "82%" }}>
-            <div className="h-2.5 w-2.5 rounded-full bg-white border border-white shadow-[0_0_8px_white]" />
-            <div className="mt-1 text-[9px] text-muted-foreground tracking-wider">START</div>
-          </div>
-          {/* current vehicle */}
-          <motion.div
-            initial={{ left: "12%", top: "82%" }}
-            animate={{ left: "44%", top: "52%" }}
-            transition={{ duration: 6, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-            className="absolute -translate-x-1/2 -translate-y-1/2"
-          >
-            <div className="relative">
-              <span className="absolute inset-0 rounded-full bg-electric/40 blur-md" />
-              <div className="relative h-4 w-4 rounded-full bg-electric shadow-[0_0_16px_var(--electric)] border-2 border-white/80" />
-            </div>
-            <div className="mt-1 text-[10px] text-electric font-medium tracking-wider">AR-12</div>
-          </motion.div>
-          {/* destination */}
-          <div className="absolute" style={{ left: "86%", top: "18%" }}>
-            <div className="h-3 w-3 rounded-full bg-emerald shadow-[0_0_12px_var(--emerald)]" />
-            <div className="mt-1 text-[9px] text-emerald tracking-wider">PAVILION B</div>
-          </div>
-
-          {/* hazard ahead */}
-          <div className="absolute" style={{ left: "60%", top: "36%" }}>
-            <span className="relative inline-flex h-3 w-3 text-crimson radar-pulse">
-              <span className="relative inline-flex h-3 w-3 rounded-full bg-crimson shadow-[0_0_12px_var(--crimson)]" />
-            </span>
-          </div>
-
-          {/* corner HUD */}
-          <div className="absolute top-3 left-3 glass-strong rounded-lg px-3 py-1.5 text-[10px] tracking-wider text-muted-foreground">
-            ROUTE · R-08 · ALPHA-7
-          </div>
-          <div className="absolute top-3 right-3 glass-strong rounded-lg px-3 py-1.5 text-[10px] text-muted-foreground flex items-center gap-2">
-            <span className="text-emerald">●</span> SIGNAL STRONG
-          </div>
-          <div className="absolute bottom-3 left-3 right-3 glass-strong rounded-xl px-4 py-3 flex items-center justify-between">
-            <div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Destination</div>
-              <div className="text-sm text-white mt-0.5">Pavilion B · Gate 3</div>
-            </div>
-            <div className="text-right">
-              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">ETA</div>
-              <div className="text-sm text-white num mt-0.5">2 min</div>
-            </div>
-          </div>
-
-          {/* DETOUR ALERT */}
-          <AnimatePresence>
-            {detour === "pending" && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                className="absolute inset-0 z-20 flex items-center justify-center p-4 sm:p-6 bg-black/40 backdrop-blur-sm"
->>>>>>> 49ac6eba1c7f3d836480ccfaff324773e110f325
               >
                 <AlertTriangle className="h-5 w-5 text-amber-500" />
                 <span className="font-semibold text-sm tracking-wide">Simulate Live Hazard</span>
@@ -382,7 +264,6 @@ export default function DriverDashboard() {
           )}
         </AnimatePresence>
 
-<<<<<<< HEAD
         {/* TOAST NOTIFICATION */}
         <AnimatePresence>
           {showToast && (
@@ -399,17 +280,5 @@ export default function DriverDashboard() {
         </AnimatePresence>
       </div>
     </>
-=======
-function BigMetric({ icon, label, value, sub, big }: { icon: React.ReactNode; label: string; value: string; sub: string; big?: boolean }) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-[#0d0d0d] p-3 sm:p-5 min-w-0 overflow-hidden">
-      <div className="flex items-center justify-between gap-2">
-        <div className="text-[9px] sm:text-[10px] uppercase tracking-[0.18em] text-muted-foreground truncate">{label}</div>
-        <div className="h-7 w-7 sm:h-9 sm:w-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">{icon}</div>
-      </div>
-      <div className={`mt-2 sm:mt-3 num font-semibold text-white tracking-tight ${big ? "text-2xl sm:text-4xl lg:text-6xl" : "text-xl sm:text-3xl lg:text-4xl"}`}>{value}</div>
-      <div className="mt-1 sm:mt-1.5 text-[10px] sm:text-xs text-muted-foreground truncate">{sub}</div>
-    </div>
->>>>>>> 49ac6eba1c7f3d836480ccfaff324773e110f325
   );
 }
