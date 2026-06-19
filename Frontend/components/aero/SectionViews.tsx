@@ -129,16 +129,28 @@ export function TimelineView() {
 }
 
 export function SettingsView() {
+  const [toggles, setToggles] = useState<Record<string, boolean>>({
+    "Alert Notifications": true,
+    "Hazard Verification Threshold": true,
+    "Operating Region": true,
+    "Auto-route on hazard": true,
+  });
+
+  const handleToggle = (label: string) => {
+    setToggles((prev) => ({ ...prev, [label]: !prev[label] }));
+  };
+
   const rows = [
-    { icon: Bell, label: "Alert Notifications", value: "Push + SMS", on: true },
-    { icon: Shield, label: "Hazard Verification Threshold", value: "3 users", on: true },
-    { icon: Globe, label: "Operating Region", value: "Lagos · WAT", on: true },
-    { icon: SettingsIcon, label: "Auto-route on hazard", value: "Enabled", on: true },
+    { icon: Bell, label: "Alert Notifications", getVal: (on: boolean) => (on ? "Push + SMS" : "Muted"), on: toggles["Alert Notifications"] },
+    { icon: Shield, label: "Hazard Verification Threshold", getVal: (on: boolean) => (on ? "3 users" : "1 user"), on: toggles["Hazard Verification Threshold"] },
+    { icon: Globe, label: "Operating Region", getVal: (on: boolean) => (on ? "Lagos · WAT" : "Local Only"), on: toggles["Operating Region"] },
+    { icon: SettingsIcon, label: "Auto-route on hazard", getVal: (on: boolean) => (on ? "Enabled" : "Disabled"), on: toggles["Auto-route on hazard"] },
   ];
+
   return (
     <Panel title="Settings" icon={<SettingsIcon className="h-4 w-4" />}>
       <div className="rounded-xl bg-[#141414] border border-white/5 divide-y divide-white/5">
-        {rows.map(({ icon: Icon, label, value, on }) => (
+        {rows.map(({ icon: Icon, label, getVal, on }) => (
           <div key={label} className="flex items-center justify-between p-4">
             <div className="flex items-center gap-3 min-w-0">
               <div className="h-9 w-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
@@ -146,12 +158,16 @@ export function SettingsView() {
               </div>
               <div className="min-w-0">
                 <div className="text-sm text-white truncate">{label}</div>
-                <div className="text-[11px] text-muted-foreground mt-0.5 truncate">{value}</div>
+                <div className="text-[11px] text-muted-foreground mt-0.5 truncate">{getVal(on)}</div>
               </div>
             </div>
-            <div className={`h-5 w-9 rounded-full relative shrink-0 ${on ? "bg-emerald" : "bg-white/10"}`}>
-              <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all ${on ? "left-[18px]" : "left-0.5"}`} />
-            </div>
+            <button
+              onClick={() => handleToggle(label)}
+              aria-label={`Toggle ${label}`}
+              className={`h-5 w-9 rounded-full relative shrink-0 transition-colors duration-200 focus:outline-none focus:ring-1 focus:ring-emerald ${on ? "bg-emerald" : "bg-white/10"}`}
+            >
+              <span className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all duration-200 ${on ? "left-[18px]" : "left-0.5"}`} />
+            </button>
           </div>
         ))}
       </div>

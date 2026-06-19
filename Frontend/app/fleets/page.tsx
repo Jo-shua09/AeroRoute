@@ -19,6 +19,7 @@ export default function FleetDashboard() {
   const [layers, setLayers] = useState<LayerToggles>({ heatmap: true, hazards: true, fleets: true });
 
   const rightOpen = useAero((s) => s.rightPanelOpen);
+  const setRightPanelOpen = useAero((s) => s.setRightPanelOpen);
   const mobileNav = useAero((s) => s.mobileNavOpen);
   const setMobileNav = useAero((s) => s.setMobileNavOpen);
 
@@ -26,6 +27,20 @@ export default function FleetDashboard() {
   useEffect(() => {
     document.title = "Command Center — AeroRoute";
   }, []);
+
+  // Close the active left dashboard tab when the AI Engine is opened
+  useEffect(() => {
+    if (rightOpen) {
+      setActive("orchestration");
+    }
+  }, [rightOpen]);
+
+  // Close the AI Engine when a left dashboard tab is opened
+  useEffect(() => {
+    if (active !== "orchestration") {
+      setRightPanelOpen(false);
+    }
+  }, [active, setRightPanelOpen]);
 
   const activeLabel = navItems.find((n) => n.id === active)?.label ?? "";
 
