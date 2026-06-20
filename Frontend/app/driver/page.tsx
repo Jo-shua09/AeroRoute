@@ -32,24 +32,22 @@ export default function DriverDashboard() {
   );
 
   useEffect(() => {
-    document.title = "Vehicle Dashboard -AeroRoute";
+    document.title = "Vehicle Dashboard - AeroRoute";
   }, []);
 
   return (
     <>
       <AnimatePresence>{isLoading && <AeroLoader onComplete={() => setIsLoading(false)} />}</AnimatePresence>
 
-      <div className="min-h-screen lg:h-screen lg:fixed lg:inset-0 bg-[#0A0A0A] text-white overflow-hidden">
-        <div className="relative w-full h-full">
-          {/* Main viewport (map engine layer mock) */}
-          <div className="absolute inset-0">
-            <MapCanvas layers={layers} hazardActive={hazardActive} />
-          </div>
+      <main className="relative min-h-screen w-full overflow-hidden bg-[#0A0A0A] text-white">
+        <div className="absolute inset-0">
+          <MapCanvas layers={layers} hazardActive={hazardActive} />
+        </div>
 
-          {/* HUD overlays */}
+        <div className="relative z-10 min-h-screen">
           <VehicleDashboardHUD route={route} hazardActive={hazardActive} onToggleHazard={() => setHazardActive((v) => !v)} />
         </div>
-      </div>
+      </main>
     </>
   );
 }
