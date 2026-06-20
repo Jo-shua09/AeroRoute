@@ -52,10 +52,10 @@ export default function DriverDashboard() {
   return (
     <>
       <AnimatePresence>{isLoading && <AeroLoader onComplete={() => setIsLoading(false)} />}</AnimatePresence>
-      <div className="fixed inset-0 bg-[#0A0A0A] text-white overflow-hidden flex flex-col font-sans select-none">
-        <main className="flex-1 w-full h-full p-4 flex flex-col lg:flex-row gap-4">
+      <div className="min-h-screen lg:h-screen lg:fixed lg:inset-0 bg-[#0A0A0A] text-white overflow-y-auto lg:overflow-hidden flex flex-col font-sans select-none">
+        <main className="flex-1 w-full flex flex-col lg:flex-row gap-2.5 sm:gap-3 p-2.5 sm:p-3 min-h-0">
           {/* THE ACTIVE ROUTE VECTOR CANVAS (Left 65%) */}
-          <section className="relative w-full lg:w-[65%] h-[50vh] lg:h-full bg-[#121212] rounded-3xl border border-white/5 overflow-hidden flex flex-col justify-center items-center">
+          <section className="relative w-full lg:w-[65%] h-[40vh] sm:h-[45vh] lg:h-full bg-[#121212] rounded-xl sm:rounded-2xl border border-white/5 overflow-hidden flex flex-col justify-center items-center shrink-0 lg:shrink">
             {/* Grid Background */}
             <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]"></div>
 
@@ -110,117 +110,119 @@ export default function DriverDashboard() {
 
             {/* Shuttle Location Marker */}
             <motion.div
-              className="absolute z-10 flex items-center justify-center h-16 w-16 bg-[#0A0A0A] border-4 border-[#00D1FF] rounded-full shadow-[0_0_24px_#00D1FF]"
+              className="absolute z-10 flex items-center justify-center h-10 w-10 sm:h-14 sm:w-14 bg-[#0A0A0A] border-[3px] sm:border-4 border-[#00D1FF] rounded-full shadow-[0_0_16px_#00D1FF]"
               animate={routeState === "normal" ? { left: "45%", top: "55%" } : { left: "55%", top: "65%" }}
               transition={{ type: "spring", stiffness: 50, damping: 15 }}
               style={{ x: "-50%", y: "-50%" }}
             >
-              <Navigation className="h-8 w-8 text-[#00D1FF]" strokeWidth={3} style={{ transform: "rotate(45deg) translate(-2px, 2px)" }} />
+              <Navigation className="h-5 w-5 sm:h-7 sm:w-7 text-[#00D1FF]" strokeWidth={3} style={{ transform: "rotate(45deg) translate(-2px, 2px)" }} />
             </motion.div>
 
             {/* Top Left Speed Indicator */}
-            <div className="absolute top-6 left-6 bg-[#18181B]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-6 shadow-2xl">
-              <div className="text-xs tracking-[0.2em] text-zinc-400 uppercase font-semibold mb-1">Current Speed</div>
-              <div className="text-4xl sm:text-6xl font-bold tracking-tighter" style={{ fontFamily: "impact, sans-serif" }}>
-                {speed} <span className="text-2xl sm:text-3xl text-zinc-500">km/h</span>
+            <div className="absolute top-2.5 left-2.5 sm:top-5 sm:left-5 bg-[#18181B]/80 backdrop-blur-xl border border-white/10 rounded-lg sm:rounded-xl p-2 sm:p-3 lg:p-4 shadow-2xl">
+              <div className="text-[9px] sm:text-[10px] tracking-[0.15em] text-zinc-400 uppercase font-semibold mb-0.5">Current Speed</div>
+              <div className="text-xl sm:text-2xl lg:text-4xl font-bold tracking-tighter font-sans" style={{ fontFamily: "impact, sans-serif" }}>
+                {speed} <span className="text-[10px] sm:text-xs lg:text-lg text-zinc-500 font-normal">km/h</span>
               </div>
             </div>
 
             {/* Top Right Master Action Button */}
-            <div className="absolute top-6 right-6 z-40">
+            <div className="absolute top-2.5 right-2.5 sm:top-5 sm:right-5 z-40">
               <button
                 onClick={() => {
                   if (routeState === "normal") setHazardActive(true);
                 }}
                 disabled={hazardActive || routeState === "detour"}
-                className="bg-[#18181B]/80 hover:bg-[#27272A] disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-xl border border-white/10 rounded-xl px-4 py-3 flex items-center gap-2 transition-colors min-h-[64px]"
+                className="bg-[#18181B]/80 hover:bg-[#27272A] disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-xl border border-white/10 rounded-lg sm:rounded-xl px-2.5 py-1.5 sm:px-3 sm:py-2 flex items-center gap-1 sm:gap-1.5 transition-colors text-[10px] sm:text-xs font-semibold shadow-2xl"
               >
-                <AlertTriangle className="h-5 w-5 text-amber-500" />
-                <span className="font-semibold text-sm tracking-wide">Simulate Live Hazard</span>
+                <AlertTriangle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-amber-500 shrink-0" />
+                <span className="tracking-wide">Simulate Live Hazard</span>
               </button>
             </div>
           </section>
 
           {/* THE TELEMETRY CONTROL HUD (Right 35%) */}
-          <aside className="w-full lg:w-[35%] h-[50vh] lg:h-full flex flex-col gap-4">
+          <aside className="w-full lg:w-[35%] flex flex-col gap-2.5 sm:gap-3 lg:h-full min-h-0 pb-4 lg:pb-0">
             {/* BRAND HEADER & ROLE SWITCHER */}
-            <div className="shrink-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-4 sm:px-6 flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <AeroLogo className="h-12 w-12" />
+            <div className="shrink-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl p-2 px-3 sm:p-3 sm:px-4 flex items-center justify-between">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <AeroLogo className="h-6 w-6 sm:h-8 sm:w-8 shrink-0" />
                 <div className="flex flex-col">
-                  <span className="text-xl font-black tracking-widest text-white leading-none uppercase">AeroRoute</span>
-                  <span className="text-[10px] text-[#00D1FF] uppercase tracking-[0.2em] mt-1 font-semibold">Pilot Telemetry</span>
+                  <span className="text-sm sm:text-base font-black tracking-widest text-white leading-none uppercase">AeroRoute</span>
+                  <span className="text-[8px] sm:text-[9px] text-[#00D1FF] uppercase tracking-[0.2em] mt-0.5 font-semibold">Pilot Telemetry</span>
                 </div>
               </div>
               <RoleSwitcher />
             </div>
 
             {/* CARD A: THE NEXT MILESTONE BLOCK */}
-            <div className="flex-1 min-h-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 sm:p-8 flex flex-col justify-center">
-              <div className="flex items-start gap-6">
-                <div className="flex-shrink-0 bg-white/5 p-4 rounded-3xl">
-                  <MilestoneIcon className="h-16 w-16 text-[#00D1FF]" strokeWidth={2.5} />
+            <div className="flex-1 min-h-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-5 flex flex-col justify-center">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="flex-shrink-0 bg-white/5 p-2 sm:p-3 rounded-xl sm:rounded-2xl">
+                  <MilestoneIcon className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-[#00D1FF]" strokeWidth={2.5} />
                 </div>
-                <div className="flex flex-col">
-                  <div className="text-4xl sm:text-5xl font-extrabold tracking-tight uppercase" style={{ fontFamily: "impact, sans-serif" }}>
+                <div className="flex flex-col min-w-0">
+                  <div className="text-lg sm:text-xl lg:text-3xl font-extrabold tracking-tight uppercase truncate" style={{ fontFamily: "impact, sans-serif" }}>
                     {milestoneInstruction}
                   </div>
                   <div
-                    className="text-6xl sm:text-7xl font-black text-white mt-2 drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] tracking-tighter"
+                    className="text-2xl sm:text-3xl lg:text-5xl font-black text-white mt-0.5 sm:mt-1 drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] tracking-tighter"
                     style={{ fontFamily: "impact, sans-serif" }}
                   >
                     {milestoneDistance}
                   </div>
-                  <div className="text-lg text-zinc-400 mt-2 font-medium tracking-wide">{milestoneSub}</div>
+                  <div className="text-[10px] sm:text-xs lg:text-sm text-zinc-400 mt-0.5 sm:mt-1 font-medium tracking-wide truncate">{milestoneSub}</div>
                 </div>
               </div>
             </div>
 
             {/* CARD B: DYNAMIC PASSENGER METRIC */}
-            <div className="flex-1 min-h-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 sm:p-8 flex flex-col justify-center relative overflow-hidden transition-colors duration-500">
+            <div className="flex-1 min-h-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-5 flex flex-col justify-center relative overflow-hidden transition-colors duration-500">
               {isSaturated && <div className="absolute inset-0 bg-amber-500/10 pointer-events-none" />}
 
               <div className="text-center w-full relative z-10">
-                <div className={`text-xs tracking-[0.25em] uppercase font-bold mb-4 ${isSaturated ? "text-amber-500" : "text-zinc-400"}`}>
+                <div className={`text-[9px] sm:text-[10px] tracking-[0.2em] uppercase font-bold mb-2 sm:mb-3 ${isSaturated ? "text-amber-500" : "text-zinc-400"}`}>
                   {isSaturated ? "FULLY SATURATED" : "PASSENGER OCCUPANCY"}
                 </div>
 
-                <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center justify-between gap-2 sm:gap-4 max-w-md mx-auto">
                   <button
                     onClick={handleDecrement}
-                    className="flex-shrink-0 h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-[#EF4444] text-white flex items-center justify-center hover:bg-[#DC2626] active:scale-95 transition-all shadow-lg"
+                    className="flex-shrink-0 h-10 w-10 sm:h-14 sm:w-14 rounded-full bg-[#EF4444] text-white flex items-center justify-center hover:bg-[#DC2626] active:scale-95 transition-all shadow-lg"
+                    aria-label="Decrease Occupancy"
                   >
-                    <Minus className="h-10 w-10" strokeWidth={3} />
+                    <Minus className="h-4 w-4 sm:h-6 sm:w-6" strokeWidth={3} />
                   </button>
 
                   <div
-                    className={`text-6xl sm:text-7xl lg:text-8xl font-black tracking-tighter ${isSaturated ? "text-amber-500 drop-shadow-[0_0_16px_rgba(245,158,11,0.6)]" : "text-white"}`}
+                    className={`text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter ${isSaturated ? "text-amber-500 drop-shadow-[0_0_12px_rgba(245,158,11,0.6)]" : "text-white"}`}
                     style={{ fontFamily: "impact, sans-serif" }}
                   >
-                    {occupancy} <span className="text-3xl sm:text-4xl lg:text-5xl text-zinc-600">/ {maxOccupancy}</span>
+                    {occupancy} <span className="text-lg sm:text-xl lg:text-2xl text-zinc-600">/ {maxOccupancy}</span>
                   </div>
 
                   <button
                     onClick={handleIncrement}
-                    className="flex-shrink-0 h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-[#10B981] text-white flex items-center justify-center hover:bg-[#059669] active:scale-95 transition-all shadow-lg"
+                    className="flex-shrink-0 h-10 w-10 sm:h-14 sm:w-14 rounded-full bg-[#10B981] text-white flex items-center justify-center hover:bg-[#059669] active:scale-95 transition-all shadow-lg"
+                    aria-label="Increase Occupancy"
                   >
-                    <Plus className="h-10 w-10" strokeWidth={3} />
+                    <Plus className="h-4 w-4 sm:h-6 sm:w-6" strokeWidth={3} />
                   </button>
                 </div>
               </div>
             </div>
 
             {/* CARD C: NAVIGATION TARGET DESTINATION */}
-            <div className="h-32 shrink-0 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-[2rem] p-6 sm:px-8 flex flex-col justify-center">
-              <div className="text-xs tracking-[0.2em] text-zinc-400 uppercase font-semibold mb-2">ACTIVE ASSIGNED PULSE TARGET</div>
-              <div className="flex items-center justify-between">
-                <div className="text-xl sm:text-2xl font-bold tracking-tight text-white truncate">Main Pavilion - Exit Gate B</div>
-                <div className="flex items-center gap-3 shrink-0 ml-4 bg-white/5 rounded-full px-4 py-2">
-                  <span className="relative flex h-4 w-4">
+            <div className="h-auto py-3.5 sm:py-4 bg-[#18181B]/60 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl p-3 sm:px-4 lg:px-5 flex flex-col justify-center">
+              <div className="text-[8px] sm:text-[9px] tracking-[0.15em] text-zinc-400 uppercase font-semibold mb-1">ACTIVE ASSIGNED PULSE TARGET</div>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3">
+                <div className="text-xs sm:text-sm lg:text-base font-bold tracking-tight text-white truncate">Main Pavilion - Exit Gate B</div>
+                <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 bg-white/5 rounded-full px-2.5 py-1 sm:px-3 sm:py-1.5 w-fit">
+                  <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-4 w-4 bg-[#10B981]"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]"></span>
                   </span>
-                  <span className="text-sm font-semibold tracking-wider text-[#10B981]">SYNCED</span>
+                  <span className="text-[9px] sm:text-[10px] font-semibold tracking-wider text-[#10B981]">SYNCED</span>
                 </div>
               </div>
             </div>
@@ -235,14 +237,14 @@ export default function DriverDashboard() {
               animate={{ y: 0 }}
               exit={{ y: "-100%" }}
               transition={{ type: "spring", damping: 20, stiffness: 100 }}
-              className="absolute top-0 left-0 right-0 z-50 bg-[#EF4444] shadow-2xl p-8 sm:p-12 flex flex-col justify-center"
-              style={{ minHeight: "50vh" }}
+              className="absolute top-0 left-0 right-0 z-50 bg-[#EF4444] shadow-2xl p-5 sm:p-10 flex flex-col justify-center"
+              style={{ minHeight: "40vh" }}
             >
-              <div className="max-w-5xl mx-auto w-full flex flex-col gap-8">
-                <div className="flex items-center gap-6">
-                  <AlertTriangle className="h-16 w-16 text-white" strokeWidth={3} />
+              <div className="max-w-5xl mx-auto w-full flex flex-col gap-3 sm:gap-6">
+                <div className="flex items-center gap-3 sm:gap-5">
+                  <AlertTriangle className="h-8 w-8 sm:h-12 sm:w-12 text-white shrink-0" strokeWidth={3} />
                   <h2
-                    className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tighter uppercase leading-none"
+                    className="text-xl sm:text-3xl lg:text-4xl font-black text-white tracking-tighter uppercase leading-none"
                     style={{ fontFamily: "impact, sans-serif" }}
                   >
                     HAZARD EN ROUTE:
@@ -251,11 +253,11 @@ export default function DriverDashboard() {
                   </h2>
                 </div>
 
-                <p className="text-2xl sm:text-3xl font-semibold text-white/90">Pre-Calculated Detour Ready. Immediate action required.</p>
+                <p className="text-xs sm:text-base lg:text-lg font-semibold text-white/90">Pre-Calculated Detour Ready. Immediate action required.</p>
 
                 <button
                   onClick={acceptDetour}
-                  className="mt-4 w-full sm:w-auto self-start bg-[#10B981] hover:bg-[#059669] text-white text-2xl sm:text-3xl font-bold uppercase tracking-wide rounded-2xl px-12 py-8 flex items-center justify-center shadow-[0_0_32px_rgba(16,185,129,0.6)] active:scale-95 transition-all min-h-[80px]"
+                  className="mt-1 sm:mt-3 w-full sm:w-auto self-start bg-[#10B981] hover:bg-[#059669] text-sm sm:text-lg lg:text-xl font-bold uppercase tracking-wide rounded-lg sm:rounded-xl px-5 py-3 sm:px-8 sm:py-4 flex items-center justify-center shadow-[0_0_24px_rgba(16,185,129,0.5)] active:scale-95 transition-all min-h-0"
                 >
                   [ ACCEPT DETOUR ROUTE ]
                 </button>
@@ -271,9 +273,9 @@ export default function DriverDashboard() {
               initial={{ opacity: 0, y: 50, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.9 }}
-              className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 bg-[#10B981] text-white px-8 py-4 rounded-full font-semibold tracking-wide text-lg shadow-2xl flex items-center gap-3"
+              className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-50 bg-[#10B981] text-white px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full font-semibold tracking-wide text-xs sm:text-sm shadow-2xl flex items-center gap-1.5 sm:gap-2 text-center whitespace-nowrap"
             >
-              <Activity className="h-6 w-6" />
+              <Activity className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               Route updated successfully via SignalR telemetry
             </motion.div>
           )}
