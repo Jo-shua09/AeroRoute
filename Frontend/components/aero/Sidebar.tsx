@@ -6,7 +6,8 @@ import { useAero } from "@/lib/store";
 
 const items: { id: NavId; label: string; icon: typeof Activity }[] = [
   { id: "orchestration", label: "Live Orchestration", icon: Activity },
-  { id: "fleet", label: "Fleet Dispatch", icon: Truck },
+  { id: "fleet", label: "Central Operations Center", icon: Truck },
+
   { id: "timeline", label: "Event Timeline", icon: CalendarClock },
   { id: "settings", label: "Settings", icon: Settings },
 ];

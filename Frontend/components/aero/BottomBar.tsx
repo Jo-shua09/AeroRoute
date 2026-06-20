@@ -7,13 +7,19 @@ import type { LayerToggles } from "./MapCanvas";
 
 function useMediaQuery(query: string) {
   const [matches, setMatches] = useState(false);
+
   useEffect(() => {
     const mql = window.matchMedia(query);
-    setMatches(mql.matches);
     const handler = (e: MediaQueryListEvent) => setMatches(e.matches);
+
+    // initialize from current value
     mql.addEventListener("change", handler);
+    // initialize without triggering sync-effect warning
+    queueMicrotask(() => setMatches(mql.matches));
+
     return () => mql.removeEventListener("change", handler);
   }, [query]);
+
   return matches;
 }
 
@@ -26,7 +32,7 @@ type Props = {
 const items: { key: keyof LayerToggles; label: string; icon: typeof Flame; color: string }[] = [
   { key: "heatmap", label: "Heatmap", icon: Flame, color: "text-emerald" },
   { key: "hazards", label: "Hazards", icon: AlertTriangle, color: "text-crimson" },
-  { key: "fleets", label: "Fleets", icon: Navigation, color: "text-electric" },
+  { key: "fleets", label: "Active Shuttles", icon: Navigation, color: "text-electric" },
 ];
 
 export function BottomBar({ layers, onToggle, rightOpen = true }: Props) {

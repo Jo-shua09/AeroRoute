@@ -5,6 +5,7 @@ import { useState } from "react";
 import { dummyClusters, dummyFleets, dummyHazards, type Hazard } from "@/lib/dummy-data";
 import { AlertTriangle, Navigation } from "lucide-react";
 import { useAero } from "@/lib/store";
+import { usePathname } from "next/navigation";
 
 export type LayerToggles = {
   heatmap: boolean;
@@ -12,10 +13,14 @@ export type LayerToggles = {
   fleets: boolean;
 };
 
-export function MapCanvas({ layers }: { layers: LayerToggles }) {
+export function MapCanvas({ layers, hazardActive }: { layers: LayerToggles; hazardActive?: boolean }) {
+  const hazardIsActive = !!hazardActive;
+
   const [hoverHazard, setHoverHazard] = useState<Hazard | null>(null);
+
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const pulses = useAero((s) => s.pulses);
+  const pathname = usePathname();
 
   return (
     <div
@@ -46,6 +51,93 @@ export function MapCanvas({ layers }: { layers: LayerToggles }) {
         ))}
         <div className="absolute rounded-full radar-sweep pointer-events-none" style={{ width: 880, height: 880, left: -440, top: -440 }} />
       </div>
+
+      {/* route + hazard overlay rendered via absolute SVG */}
+
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="route-glow-cyan" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#00F0FF" stopOpacity="0.18" />
+            <stop offset="100%" stopColor="#00F0FF" stopOpacity="1" />
+          </linearGradient>
+          <linearGradient id="route-glow-crimson" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#FF0055" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#FF0055" stopOpacity="1" />
+          </linearGradient>
+          <filter id="cyan-glow">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="crimson-glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* optimal cyan route */}
+
+        <AnimatePresence>
+          {!hazardIsActive && pathname === "/driver" && (
+            <motion.path
+              key="route-cyan"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6 }}
+              d="M 10 90 L 90 10"
+              stroke="url(#route-glow-cyan)"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              fill="none"
+              filter="url(#cyan-glow)"
+            />
+          )}
+        </AnimatePresence>
+
+        {/* hazard detour cyan route (graceful detour around hazard polygon) */}
+        <AnimatePresence>
+          {hazardIsActive && (
+            <motion.path
+              key="route-detour"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.65, ease: "easeOut" }}
+              d="M 10 90 L 42 62 L 60 70 L 90 10"
+              stroke="url(#route-glow-cyan)"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+              filter="url(#cyan-glow)"
+            />
+          )}
+        </AnimatePresence>
+
+        {/* animated crimson hazard polygon shape */}
+        <AnimatePresence>
+          {hazardIsActive && (
+            <motion.polygon
+              key="hazard-poly"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 0.95, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.35 }}
+              points="32,60 46,54 62,60 56,76 38,76"
+              fill="rgba(255,0,85,0.18)"
+              stroke="rgba(255,0,85,0.85)"
+              strokeWidth="0.9"
+              filter="url(#crimson-glow)"
+            />
+          )}
+        </AnimatePresence>
+      </svg>
 
       {/* mock geographic shapes */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30" preserveAspectRatio="none" viewBox="0 0 100 100">

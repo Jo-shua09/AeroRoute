@@ -31,7 +31,7 @@ export default function CommuterDashboard() {
 
   // Update document title
   useEffect(() => {
-    document.title = "Attendee Terminal — AeroRoute";
+    document.title = "Attendee Terminal -AeroRoute";
   }, []);
 
   const dropPulse = useAero((s) => s.dropPulse);

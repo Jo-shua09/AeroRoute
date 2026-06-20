@@ -73,7 +73,7 @@ export default function Landing() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mx-auto mt-6 max-w-2xl text-sm sm:text-base text-muted-foreground leading-relaxed"
         >
-          AeroRoute fuses predictive AI, offline-first commuter pulses, and live fleet telemetry into one calm operating system — so 200,000 people
+          AeroRoute fuses predictive AI, offline-first commuter pulses, and live fleet telemetry into one calm operating system -so 200,000 people
           move like 200.
         </motion.p>
 
@@ -240,7 +240,7 @@ export default function Landing() {
               <div className="text-[10px] uppercase tracking-[0.22em] text-emerald">Live Demo</div>
               <h3 className="mt-3 text-3xl font-semibold tracking-tight">Step into the Orchestration Engine.</h3>
               <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                Pick a profile and explore a fully reactive simulation — three isolated dashboards, shared dummy telemetry, zero setup.
+                Pick a profile and explore a fully reactive simulation -three isolated dashboards, shared dummy telemetry, zero setup.
               </p>
               <div className="mt-6 flex flex-wrap gap-2.5 w-full">
                 <Link // Changed 'to' to 'href'

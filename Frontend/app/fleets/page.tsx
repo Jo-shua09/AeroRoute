@@ -25,7 +25,7 @@ export default function FleetDashboard() {
 
   // Update document title on client side since this is a client component
   useEffect(() => {
-    document.title = "Command Center — AeroRoute";
+    document.title = "Command Center -AeroRoute";
   }, []);
 
   // Close the active left dashboard tab when the AI Engine is opened

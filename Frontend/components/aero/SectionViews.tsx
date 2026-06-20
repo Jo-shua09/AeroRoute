@@ -7,17 +7,17 @@ import { Truck, Settings as SettingsIcon, CalendarClock, Shield, Bell, Globe, Al
 import { useAero } from "@/lib/store";
 
 function useMediaQuery(query: string) {
-  const [matches, setMatches] = useState(false);
+  const [matches, setMatches] = useState(() =>
+    typeof window !== "undefined" ? window.matchMedia(query).matches : false
+  );
   useEffect(() => {
     const mql = window.matchMedia(query);
-    setMatches(mql.matches);
     const handler = (e: MediaQueryListEvent) => setMatches(e.matches);
     mql.addEventListener("change", handler);
     return () => mql.removeEventListener("change", handler);
   }, [query]);
   return matches;
 }
-
 
 const statusColor = (s: string) =>
   s === "en-route"
@@ -30,7 +30,7 @@ const statusColor = (s: string) =>
 
 export function FleetView() {
   return (
-    <Panel title="Fleet Dispatch" icon={<Truck className="h-4 w-4" />}>
+    <Panel title="Central Operations Center" icon={<Truck className="h-4 w-4" />}>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {dummyFleets.map((f, i) => (
           <motion.div
@@ -52,17 +52,7 @@ export function FleetView() {
               </div>
               <span className={`text-[10px] px-2 py-1 rounded border tracking-wider uppercase ${statusColor(f.status)}`}>{f.status}</span>
             </div>
-            <div className="mt-4">
-              <div className="flex items-center justify-between text-[11px] text-muted-foreground mb-1.5">
-                <span>Occupancy</span>
-                <span className="num text-white">
-                  {f.occupied} / {f.capacity}
-                </span>
-              </div>
-              <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-electric to-emerald" style={{ width: `${(f.occupied / f.capacity) * 100}%` }} />
-              </div>
-            </div>
+
             <div className="mt-3 pt-3 border-t border-white/5 grid grid-cols-2 gap-2 text-[11px]">
               <div>
                 <div className="text-muted-foreground">Heading</div>
@@ -142,9 +132,19 @@ export function SettingsView() {
 
   const rows = [
     { icon: Bell, label: "Alert Notifications", getVal: (on: boolean) => (on ? "Push + SMS" : "Muted"), on: toggles["Alert Notifications"] },
-    { icon: Shield, label: "Hazard Verification Threshold", getVal: (on: boolean) => (on ? "3 users" : "1 user"), on: toggles["Hazard Verification Threshold"] },
+    {
+      icon: Shield,
+      label: "Hazard Verification Threshold",
+      getVal: (on: boolean) => (on ? "3 users" : "1 user"),
+      on: toggles["Hazard Verification Threshold"],
+    },
     { icon: Globe, label: "Operating Region", getVal: (on: boolean) => (on ? "Lagos · WAT" : "Local Only"), on: toggles["Operating Region"] },
-    { icon: SettingsIcon, label: "Auto-route on hazard", getVal: (on: boolean) => (on ? "Enabled" : "Disabled"), on: toggles["Auto-route on hazard"] },
+    {
+      icon: SettingsIcon,
+      label: "Auto-route on hazard",
+      getVal: (on: boolean) => (on ? "Enabled" : "Disabled"),
+      on: toggles["Auto-route on hazard"],
+    },
   ];
 
   return (

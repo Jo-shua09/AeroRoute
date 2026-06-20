@@ -76,7 +76,7 @@ export default function SelectRole() {
             </div>
             <h1 className="mt-6 text-4xl sm:text-5xl font-semibold tracking-[-0.03em]">Select Operational Core Profile</h1>
             <p className="mt-4 text-sm sm:text-base text-muted-foreground">
-              Choose an interface to initialize localized telemetry. Each profile is fully isolated — you&apos;ll only see the features for the role
+              Choose an interface to initialize localized telemetry. Each profile is fully isolated -you&apos;ll only see the features for the role
               you pick.
             </p>
           </motion.div>
@@ -130,7 +130,7 @@ export default function SelectRole() {
             transition={{ delay: 0.5 }}
             className="mt-14 text-center text-[11px] text-muted-foreground"
           >
-            Selecting a profile locks navigation to that perspective. You can switch any time via the &apos;Change Role&apso; affordance in the
+            Selecting a profile locks navigation to that perspective. You can switch any time via the &apos;Change Role&apos; affordance in the
             dashboard header.
           </motion.div>
         </main>

@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   // Main SEO information
   metadataBase: new URL("https://aeroroute.com"), // IMPORTANT: Replace with your actual domain
   title: {
-    default: "AeroRoute — Real-Time Human Flow Orchestration",
+    default: "AeroRoute -Real-Time Human Flow Orchestration",
     template: "%s | AeroRoute", // Allows page.tsx to set a specific title which will be appended with "| AeroRoute"
   },
   description:
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
 
   // Open Graph (Social Media) metadata
   openGraph: {
-    title: "AeroRoute — Real-Time Human Flow Orchestration",
+    title: "AeroRoute -Real-Time Human Flow Orchestration",
     description:
       "AI-powered predictive crowd intelligence and logistics routing for mega-gatherings and dense urban hubs. Optimize human flow with AeroRoute.",
     url: "https://aeroroute.com", // IMPORTANT: Replace with your actual domain
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@AeroRouteHQ", // IMPORTANT: Replace with your Twitter handle
     creator: "@AeroRouteHQ", // IMPORTANT: Replace with your Twitter handle
-    title: "AeroRoute — Human Flow Intelligence",
+    title: "AeroRoute -Human Flow Intelligence",
     description:
       "Real-time human flow orchestration for large events and urban environments. Predictive AI, offline-first tech, and dynamic logistics.",
     images: [

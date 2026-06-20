@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌍 AeroRoute — Client Application
+# 🌍 AeroRoute -Client Application
 
 **The frontend orchestration engine for predictive crowd intelligence and logistics routing.**
 
@@ -63,16 +63,19 @@ NEXT_PUBLIC_API_URL=http://localhost:5000/api
 ### Installation
 
 1. Clone the repository and navigate to the frontend directory:
+
    ```bash
    cd Frontend
    ```
 
 2. Install the dependencies:
+
    ```bash
    npm install
    ```
 
 3. Start the development server:
+
    ```bash
    npm run dev
    ```
@@ -102,8 +105,9 @@ Frontend/
 
 ## 🧠 State Management
 
-This project utilizes **Zustand** for lightweight, decentralized state management. 
+This project utilizes **Zustand** for lightweight, decentralized state management.
 The primary store is defined in `lib/store.ts` (e.g., `useAero`) and manages:
+
 - Active navigation states (orchestration, fleet dispatch, timeline).
 - Modal visibility toggles (e.g., Timeline Drawer, Commuter Pulse Modal).
 - Real-time or simulated data arrays (active pulses, hazard regions).
@@ -111,6 +115,7 @@ The primary store is defined in `lib/store.ts` (e.g., `useAero`) and manages:
 ## 🎨 Typography & Design System
 
 The UI relies on a specific typographic hierarchy handled by `next/font/google`:
+
 - **Bricolage Grotesque:** Used for primary branding, headers, and numeric readouts (using `tabular-nums` for alignment).
 - **Plus Jakarta Sans:** Used for highly legible body text, micro-labels, and interface elements.
 

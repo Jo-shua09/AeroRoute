@@ -85,7 +85,8 @@ export const dummyTriage: TriageItem[] = [
 
 export const navItems = [
   { id: "orchestration", label: "Live Orchestration" },
-  { id: "fleet", label: "Fleet Dispatch" },
+  { id: "fleet", label: "Central Operations Center" },
+
   { id: "timeline", label: "Event Timeline" },
   { id: "settings", label: "Settings" },
 ] as const;
