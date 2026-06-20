@@ -189,7 +189,7 @@ export function VehicleDashboardHUD({
       <div
         className="
           fixed
-          top-24
+          top-38
           right-2
           sm:top-20
           sm:right-4
