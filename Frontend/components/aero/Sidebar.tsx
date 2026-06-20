@@ -137,16 +137,17 @@ export function Sidebar({ active, onChange, onSimulate }: Props) {
             <Smartphone className="h-4 w-4" />
           </button>
         ) : (
-          <button
-            onClick={onSimulate}
-            className="group w-full rounded-lg bg-primary text-primary-foreground px-3.5 py-2.5 text-sm font-medium hover:opacity-90 transition flex items-center justify-between overflow-hidden"
-          >
-            <span className="flex items-center gap-2">
-              <Smartphone className="h-4 w-4" />
-              Simulate Commuter Pulse
-            </span>
-            <span className="text-[10px] tracking-wider opacity-50 group-hover:translate-x-0.5 transition-transform">→</span>
-          </button>
+          <></>
+          // <button
+          //   onClick={onSimulate}
+          //   className="group w-full rounded-lg bg-primary text-primary-foreground px-3.5 py-2.5 text-sm font-medium hover:opacity-90 transition flex items-center justify-between overflow-hidden"
+          // >
+          //   <span className="flex items-center gap-2">
+          //     <Smartphone className="h-4 w-4" />
+          //     Simulate Commuter Pulse
+          //   </span>
+          //   <span className="text-[10px] tracking-wider opacity-50 group-hover:translate-x-0.5 transition-transform">→</span>
+          // </button>
         )}
       </div>
     </motion.aside>
