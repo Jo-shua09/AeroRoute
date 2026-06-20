@@ -58,12 +58,12 @@ export const dummyClusters: DemandCluster[] = [
 ];
 
 export const dummyFleets: Fleet[] = [
-  { id: "f1", unit: "AR-12", x: 22, y: 48, heading: 45, status: "en-route", capacity: 14, occupied: 9 },
-  { id: "f2", unit: "AR-44", x: 58, y: 28, heading: 120, status: "rerouting", capacity: 14, occupied: 12 },
-  { id: "f3", unit: "AR-07", x: 70, y: 62, heading: 200, status: "boarding", capacity: 14, occupied: 14 },
-  { id: "f4", unit: "AR-19", x: 38, y: 70, heading: 310, status: "en-route", capacity: 14, occupied: 6 },
-  { id: "f5", unit: "AR-28", x: 50, y: 50, heading: 90, status: "en-route", capacity: 14, occupied: 11 },
-  { id: "f6", unit: "AR-31", x: 82, y: 44, heading: 270, status: "idle", capacity: 14, occupied: 0 },
+  { id: "f1", unit: "Vehicle-01", x: 22, y: 48, heading: 45, status: "en-route", capacity: 14, occupied: 9 },
+  { id: "f2", unit: "Vehicle-02", x: 58, y: 28, heading: 120, status: "rerouting", capacity: 14, occupied: 12 },
+  { id: "f3", unit: "Vehicle-03", x: 70, y: 62, heading: 200, status: "boarding", capacity: 14, occupied: 14 },
+  { id: "f4", unit: "Vehicle-04", x: 38, y: 70, heading: 310, status: "en-route", capacity: 14, occupied: 6 },
+  { id: "f5", unit: "Vehicle-05", x: 50, y: 50, heading: 90, status: "en-route", capacity: 14, occupied: 11 },
+  { id: "f6", unit: "Vehicle-06", x: 82, y: 44, heading: 270, status: "idle", capacity: 14, occupied: 0 },
 ];
 
 export const dummyTimeline: TimelineEvent[] = [
