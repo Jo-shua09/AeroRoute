@@ -28,13 +28,6 @@ export default function FleetDashboard() {
     document.title = "Command Center -AeroRoute";
   }, []);
 
-  // Close the active left dashboard tab when the AI Engine is opened
-  useEffect(() => {
-    if (rightOpen) {
-      setActive("orchestration");
-    }
-  }, [rightOpen]);
-
   // Close the AI Engine when a left dashboard tab is opened
   useEffect(() => {
     if (active !== "orchestration") {
@@ -42,7 +35,8 @@ export default function FleetDashboard() {
     }
   }, [active, setRightPanelOpen]);
 
-  const activeLabel = navItems.find((n) => n.id === active)?.label ?? "";
+  const visibleActive = rightOpen ? "orchestration" : active;
+  const activeLabel = navItems.find((n) => n.id === visibleActive)?.label ?? "";
 
   const handleNav = (id: NavId) => {
     setActive(id);
