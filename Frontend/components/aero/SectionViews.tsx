@@ -75,6 +75,10 @@ export function FleetView() {
 export function TimelineView() {
   const schedule = useAero((s) => s.schedule);
   const setTimelineOpen = useAero((s) => s.setTimelineOpen);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   return (
     <Panel
       title="Event Timeline"
@@ -105,7 +109,7 @@ export function TimelineView() {
                 transition={{ delay: i * 0.05 }}
                 className="grid grid-cols-12 items-center px-4 py-3.5 border-b border-[var(--hairline)] last:border-0 hover:bg-white/[0.02] transition text-sm"
               >
-                <div className="col-span-2 num text-muted-foreground">{e.endTime}</div>
+                <div className="col-span-2 num text-muted-foreground">{mounted ? e.endTime : "--:--"}</div>
                 <div className="col-span-5 truncate">{e.name}</div>
                 <div className="col-span-3 text-muted-foreground truncate">{e.zone}</div>
                 <div className="col-span-2 num text-right">{e.volume.toLocaleString()}</div>

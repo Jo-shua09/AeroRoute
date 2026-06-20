@@ -31,6 +31,11 @@ export function RightPanel() {
   const toggle = useAero((s) => s.toggleRightPanel);
   const schedule = useAero((s) => s.schedule);
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <>
       {/* Reopen tab when closed */}
@@ -114,7 +119,7 @@ export function RightPanel() {
                 {schedule.slice(0, 5).map((ev) => (
                   <div key={ev.id} className="relative flex items-center gap-3 pl-4">
                     <span className="absolute left-0 top-1.5 h-2.5 w-2.5 rounded-full ring-2 ring-[var(--app-bg)] bg-emerald shadow-[0_0_8px_var(--emerald)]" />
-                    <span className="text-[11px] num text-muted-foreground w-10">{ev.endTime}</span>
+                    <span className="text-[11px] num text-muted-foreground w-10">{mounted ? ev.endTime : "--:--"}</span>
                     <div className="flex-1 min-w-0">
                       <div className="text-xs truncate">{ev.name}</div>
                     </div>

@@ -80,6 +80,9 @@ export const metadata: Metadata = {
     ],
   },
 
+  icons: {
+    icon: "/favicon.ico",
+  },
   manifest: "/site.webmanifest", // If you have a PWA manifest
   robots: {
     index: true,
