@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>OperatorHub Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <style>
+      body { font-family: Arial, Helvetica, sans-serif; margin: 1rem; }
+      .message { border: 1px solid #ddd; padding: .5rem; margin-bottom: .5rem; }
+    </style>
+  </head>
+  <body>
+    <h1>OperatorHub Test</h1>
+    <div id="status">Connecting...</div>
+    <h2>Event Alerts</h2>
+    <div id="events"></div>
+    <h2>Pulse Clusters</h2>
+    <div id="clusters"></div>
+
+    <script>
+      const status = document.getElementById('status');
+      const events = document.getElementById('events');
+      const clusters = document.getElementById('clusters');
+
+      const hubUrl = `${location.protocol}//${location.host}/operatorHub`;
+      const connection = new signalR.HubConnectionBuilder()
+        .withUrl('/operatorHub')
+        .withAutomaticReconnect()
+        .build();
+
+      connection.on('EventAlert', (dto) => {
+        const el = document.createElement('div');
+        el.className = 'message';
+        el.textContent = `${dto.eventName} at ${dto.locationZone} — ${dto.minutesRemaining} minutes remaining`;
+        events.prepend(el);
+      });
+
+      connection.on('PulseCluster', (dto) => {
+        const el = document.createElement('div');
+        el.className = 'message';
+        el.textContent = `Cluster at ${dto.latitude.toFixed(5)}, ${dto.longitude.toFixed(5)} — ${dto.pulseCount} pulses`;
+        clusters.prepend(el);
+      });
+
+      connection.start().then(() => {
+        status.textContent = 'Connected';
+      }).catch(err => {
+        status.textContent = 'Error connecting';
+        console.error(err);
+      });
+    </script>
+  </body>
+</html>
