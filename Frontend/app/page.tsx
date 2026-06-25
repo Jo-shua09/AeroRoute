@@ -108,19 +108,21 @@ export default function Landing() {
             </span>
           </div>
 
-          <nav className="flex items-center gap-1.5 sm:gap-2 text-[12px]">
+          <nav className="flex items-center justify-between gap-1.5 sm:gap-2 text-[12px]">
             <a href="#how" className="hidden sm:inline px-2.5 py-1.5 rounded-md text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900 transition">
               How it works
             </a>
-            <a href="#roles" className="hidden md:inline px-2.5 py-1.5 rounded-md text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900 transition">
-              Roles
-            </a>
-            <Link
-              href="/select-role"
-              className="ml-1 px-3 py-1.5 rounded-md bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/25 transition flex items-center gap-1.5 font-medium"
-            >
-              Console <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
+            <div className="flex items-center gap-1.5 sm:gap-2 text-[12px]" >
+              <a href="#roles" className="hidden md:inline px-2.5 py-1.5 rounded-md text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900 transition">
+                Roles
+              </a>
+              <Link
+                href="/select-role"
+                className="ml-1 px-3 py-1.5 rounded-md bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/25 transition flex items-center gap-1.5 font-medium"
+              >
+                Console <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
           </nav>
         </div>
       </header>
