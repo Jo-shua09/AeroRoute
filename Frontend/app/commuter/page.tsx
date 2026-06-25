@@ -2,11 +2,12 @@
 
 import { motion, AnimatePresence } from "motion/react";
 import { useEffect, useState } from "react";
-import { MapPin, Mic, AlertTriangle, Check, Loader2, Battery, Wifi, Signal, Bus, Navigation, Radio } from "lucide-react";
+import { MapPin, Mic, AlertTriangle, Check, Loader2, Battery, Wifi, Signal, Bus, Navigation } from "lucide-react";
 import { RoleSwitcher } from "@/components/aero/RoleSwitcher";
 import { ThemeToggle } from "@/components/aero/ThemeToggle";
 import { toast } from "sonner";
 import { useAero } from "@/lib/store";
+import { AeroLogo } from "@/components/aero/AeroLogo";
 
 const PIDGIN_NOTE = "Water don block estate road junction, massive crowd dey here.";
 
@@ -60,9 +61,7 @@ export default function CommuterDashboard() {
       {/* top bar */}
       <header className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="h-8 w-8 rounded-md bg-gradient-to-br from-emerald/30 to-electric/20 border border-white/10 flex items-center justify-center">
-            <Radio className="h-4 w-4 text-emerald" />
-          </div>
+          <AeroLogo className="h-9 w-9" showBackground={true} />
           <div className="flex flex-col leading-none">
             <span className="text-[14px] font-semibold tracking-tight">AeroRoute</span>
             <span className="text-[9px] text-muted-foreground tracking-[0.18em] uppercase mt-0.5">Attendee Terminal</span>

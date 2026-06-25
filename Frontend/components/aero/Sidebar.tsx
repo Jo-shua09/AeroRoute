@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
-import { Activity, Truck, CalendarClock, Settings, Radio, TrendingUp, ChevronLeft, Smartphone, Calendar } from "lucide-react";
+import { Activity, Truck, CalendarClock, Settings, TrendingUp, ChevronLeft, Smartphone, Calendar } from "lucide-react";
 import { useState } from "react";
 import type { NavId } from "@/lib/dummy-data";
 import { useAero } from "@/lib/store";
+import { AeroLogo } from "./AeroLogo";
 
 const items: { id: NavId; label: string; icon: typeof Activity }[] = [
   { id: "orchestration", label: "Live Orchestration", icon: Activity },
@@ -31,9 +32,7 @@ export function Sidebar({ active, onChange, onSimulate }: Props) {
     >
       <div className={`flex items-center h-16 border-b border-[var(--hairline)] ${collapsed ? "justify-center" : "px-4"}`}>
         <div className="flex items-center gap-2.5 overflow-hidden">
-          <div className="relative h-8 w-8 rounded-md bg-gradient-to-br from-emerald/30 to-electric/20 border border-[var(--hairline)] flex items-center justify-center shrink-0">
-            <Radio className="h-4 w-4 text-emerald" />
-          </div>
+          <AeroLogo className="h-8 w-8" showBackground={true} />
           {!collapsed && (
             <div className="flex flex-col leading-none">
               <span className="text-[15px] font-semibold tracking-tight font-heading">AeroRoute</span>
@@ -137,17 +136,16 @@ export function Sidebar({ active, onChange, onSimulate }: Props) {
             <Smartphone className="h-4 w-4" />
           </button>
         ) : (
-          <></>
-          // <button
-          //   onClick={onSimulate}
-          //   className="group w-full rounded-lg bg-primary text-primary-foreground px-3.5 py-2.5 text-sm font-medium hover:opacity-90 transition flex items-center justify-between overflow-hidden"
-          // >
-          //   <span className="flex items-center gap-2">
-          //     <Smartphone className="h-4 w-4" />
-          //     Simulate Commuter Pulse
-          //   </span>
-          //   <span className="text-[10px] tracking-wider opacity-50 group-hover:translate-x-0.5 transition-transform">→</span>
-          // </button>
+          <button
+            onClick={onSimulate}
+            className="group w-full rounded-lg bg-primary text-primary-foreground px-3.5 py-2.5 text-sm font-medium hover:opacity-90 transition flex items-center justify-between overflow-hidden"
+          >
+            <span className="flex items-center gap-2">
+              <Smartphone className="h-4 w-4" />
+              Simulate Commuter Pulse
+            </span>
+            <span className="text-[10px] tracking-wider opacity-50 group-hover:translate-x-0.5 transition-transform">→</span>
+          </button>
         )}
       </div>
     </motion.aside>
