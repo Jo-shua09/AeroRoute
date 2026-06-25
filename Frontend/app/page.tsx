@@ -150,13 +150,13 @@ export default function Landing() {
             <div className="mt-7 flex flex-wrap items-center gap-3">
               <Link
                 href="/select-role"
-                className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-3 text-[14px] font-semibold text-zinc-950 hover:bg-emerald-400 transition shadow-[0_10px_30px_-10px_rgba(16,185,129,0.6)]"
+                className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-3 text-[14px] font-semibold text-zinc-950 hover:bg-emerald-400 transition shadow-[0_10px_30px_-10px_rgba(16,185,129,0.6)] whitespace-nowrap"
               >
                 Choose your perspective <ArrowRight className="h-4 w-4" />
               </Link>
               <a
                 href="#how"
-                className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900/60 px-5 py-3 text-[14px] font-medium text-zinc-200 hover:bg-zinc-900 transition"
+                className="inline-flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900/60 px-5 py-3 text-[14px] font-medium text-zinc-200 hover:bg-zinc-900 transition whitespace-nowrap"
               >
                 See how it works
               </a>
@@ -502,7 +502,9 @@ function RoleCard({
       </ul>
       <div className="relative mt-6 flex items-center justify-between border-t border-zinc-800 pt-4">
         <span className="text-[11px] uppercase tracking-[0.2em] text-zinc-500">Live data connected</span>
-        <span className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[12px] font-semibold transition ${tones.btn}`}>
+        <span
+          className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[12px] font-semibold transition whitespace-nowrap ${tones.btn}`}
+        >
           {cta} <ArrowRight className="h-3.5 w-3.5" />
         </span>
       </div>
@@ -558,7 +560,7 @@ function HotspotModal({ h, onClose }: { h: Hotspot; onClose: () => void }): Reac
 
         <Link
           href="/fleets"
-          className="flex items-center justify-center gap-2 px-4 py-3 bg-emerald-400 text-zinc-950 text-[13px] font-semibold hover:bg-emerald-300 transition"
+          className="flex items-center justify-center gap-2 px-4 py-3 bg-emerald-400 text-zinc-950 text-[13px] font-semibold hover:bg-emerald-300 transition whitespace-nowrap"
         >
           <Zap className="h-3.5 w-3.5" /> Deploy Surge Relief
         </Link>
