@@ -119,7 +119,7 @@ export default function Landing() {
               href="/select-role"
               className="ml-1 px-3 py-1.5 rounded-md bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/25 transition flex items-center gap-1.5 font-medium"
             >
-              Enter Console <ArrowRight className="h-3.5 w-3.5" />
+              Console <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </nav>
         </div>
@@ -179,6 +179,7 @@ export default function Landing() {
                 className="absolute inset-0 h-full w-full object-cover opacity-95"
                 width={1920}
                 height={1280}
+                priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/30 pointer-events-none" />
 
