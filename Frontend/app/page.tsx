@@ -137,8 +137,7 @@ export default function Landing() {
 
             <h1 className="mt-5 font-display font-bold tracking-tight text-zinc-50 text-[40px] leading-[1.05] sm:text-5xl lg:text-[64px] lg:leading-[1.02]">
               Orchestrating Millions in <span className="text-emerald-400">Redemption City</span>.
-              <br className="hidden sm:block" />
-              <span className="text-zinc-400">Zero Gridlock.</span>
+              <br className="hidden sm:block" /> <span className="text-zinc-400">Zero Gridlock.</span>
             </h1>
 
             <p className="mt-5 max-w-xl text-[15px] sm:text-lg leading-relaxed text-zinc-400">
